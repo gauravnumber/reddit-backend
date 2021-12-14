@@ -14,6 +14,12 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+  vote: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    }
+  ],
   upvote: [
     {
       type: Schema.Types.ObjectId,

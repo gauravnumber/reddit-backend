@@ -13,7 +13,10 @@ module.exports = `
    post(
      title: String!
      body: String!
-  #  ): String!
    ): Post!
+
+   upvote(
+     postId: String!
+   ): String!
  }
 `;

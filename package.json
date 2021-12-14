@@ -6,8 +6,9 @@
     "dev": "nodemon index.js"
   },
   "_moduleAliases": {
-    "@": ".",
-    "@models": "./models"
+    "@": "./",
+    "@models": "./models",
+    "@context": "./context"
   },
   "keywords": [],
   "author": "",

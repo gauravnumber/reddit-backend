@@ -19,6 +19,7 @@ module.exports = `
     title: String!
     body: String!
     owner: User!
+    vote: [User]!
     upvote: [User]!
     downvote: [User]!
     totalNumOfVote: Int!

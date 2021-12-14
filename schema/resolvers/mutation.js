@@ -1,9 +1,9 @@
 const { AuthenticationError, UserInputError } = require('apollo-server')
 
-const checkAuth = require('../../context/check-auth')
+const checkAuth = require('@context/check-auth')
 
-const User = require('../../models/userSchema')
-const Post = require('../../models/postSchema')
+const User = require('@models/userSchema')
+const Post = require('@models/postSchema')
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -63,10 +63,39 @@ module.exports = {
 
       const newPostSave = await newPost.save()
 
-      console.log('newPostSave._doc', newPostSave._doc)
+      // console.log('newPostSave._doc', newPostSave._doc)
 
       return { ...newPostSave._doc }
       // return { id: newPostSave._id, ...newPostSave._doc }
-    }
+    },
+
+    upvote: async (_, { postId }, context) => {
+      const loginUser = checkAuth(context)
+
+      // const user = await User.findById(loginUser.id)
+
+      const post = await Post.findById(postId)
+
+      // first time upvoted
+      if (!post.upvote.includes(loginUser._id)) {
+        const newPost = await Post.findByIdAndUpdate(postId, {
+          upvote: post.upvote.concat(loginUser._id),
+          vote: post.vote.concat(loginUser._id)
+        })
+
+        console.log('newPost._doc', newPost._doc)
+        return "upvoted"
+      }
+
+      // undo upvote
+
+      await Post.findByIdAndUpdate(postId, {
+        upvote: post.upvote.filter(upvoteId => upvoteId.toString() !== loginUser._id),
+        vote: post.vote.filter(voteId => voteId.toString() !== loginUser._id),
+      })
+
+      return "dis-upvoted"
+    },
+
   }
 }
