@@ -10,8 +10,8 @@ module.exports = {
     owner: async (parent) => {
       const loginUser = await User.findById(parent.id)
 
-      console.log('loginUser._doc', loginUser._doc)
-      // return loginUser._doc
+      // console.log('loginUser._doc', loginUser._doc)
+      return loginUser
     }
   }
 }
