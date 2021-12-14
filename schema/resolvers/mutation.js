@@ -57,10 +57,13 @@ module.exports = {
       const newPost = await Post({
         title,
         body,
-        owner: loginUser.id
+        owner: loginUser._id,
+        createdAt: new Date().toISOString(),
       })
 
       const newPostSave = await newPost.save()
+
+      console.log('newPostSave._doc', newPostSave._doc)
 
       return { ...newPostSave._doc }
       // return { id: newPostSave._id, ...newPostSave._doc }

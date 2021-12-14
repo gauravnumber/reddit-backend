@@ -5,6 +5,10 @@
   "scripts": {
     "dev": "nodemon index.js"
   },
+  "_moduleAliases": {
+    "@": ".",
+    "@models": "./models"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

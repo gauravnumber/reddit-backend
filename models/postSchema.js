@@ -31,7 +31,11 @@ const postSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Comment',
     }
-  ]
+  ],
+  createdAt: {
+    type: Date,
+    required: true,
+  }
 })
 
 module.exports = model('Post', postSchema)

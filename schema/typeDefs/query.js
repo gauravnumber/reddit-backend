@@ -23,6 +23,7 @@ module.exports = `
     downvote: [User]!
     totalNumOfVote: Int!
     comment: [Comment]!
+    createdAt: String!
   }
 
   type Query {
