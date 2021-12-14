@@ -1,3 +1,5 @@
+require('module-alias/register')
+
 const { ApolloServer } = require('apollo-server')
 const { typeDefs, resolvers } = require('./schema')
 const mongoose = require('mongoose')
