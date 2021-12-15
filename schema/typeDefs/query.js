@@ -30,5 +30,4 @@ module.exports = `#graphql
   type Query {
     show: String!
   }
-
 `;
