@@ -26,6 +26,12 @@ module.exports = `#graphql
     comment: [Comment]!
     createdAt: String!
   }
+  
+  type Subreddit {
+    _id: ID!
+    name: String!
+    post: [Post]!
+  }
 
   type Query {
     show: String!

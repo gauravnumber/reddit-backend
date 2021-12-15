@@ -7,7 +7,7 @@ module.exports = {
     post: async (_, { title, body }, context) => {
       const loginUser = checkAuth(context)
 
-      const newPost = await Post({
+      const newPost = new Post({
         title,
         body,
         owner: loginUser._id,

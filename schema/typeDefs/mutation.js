@@ -27,5 +27,9 @@ module.exports = `#graphql
      postId: String!
      body: String!
    ): Comment!
+
+   setSubreddit(
+     name: String!
+   ): String!
  }
 `;
