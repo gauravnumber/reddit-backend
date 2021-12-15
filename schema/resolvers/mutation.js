@@ -70,114 +70,91 @@ module.exports = {
     },
 
     upvote: async (_, { postId }, context) => {
-      const loginUser = checkAuth(context)
+      let upvotedPost
 
-      // const user = await User.findById(loginUser.id)
+      const loginUser = checkAuth(context)
 
       const post = await Post.findById(postId)
 
       // First time vote
       if (!post.vote.includes(loginUser._id)) {
-        await Post.findByIdAndUpdate(postId, {
+        upvotedPost = await Post.findByIdAndUpdate(postId, {
           upvote: post.upvote.concat(loginUser._id),
           vote: post.vote.concat(loginUser._id)
         })
 
-        return 'First time voted and upvoted.'
+        // return 'First time voted and upvoted.'
+        return upvotedPost
       }
 
       // already downvoted or already upvoted
 
       // remove downvote 
       if (post.downvote.includes(loginUser._id)) {
-        await Post.findByIdAndUpdate(postId, {
+        upvotedPost = await Post.findByIdAndUpdate(postId, {
           downvote: post.upvote.filter(upvotedUserId => upvotedUserId.toString() !== loginUser._id),
           upvote: post.upvote.concat(loginUser._id)
         })
 
-        return 'Remove downvote. Upvote this post.'
+        // return 'Remove downvote. Upvote this post.'
+        return upvotedPost
       }
 
       // already upvoted
 
       if (post.upvote.includes(loginUser._id)) {
-        await Post.findByIdAndUpdate(postId, {
+        upvotedPost = await Post.findByIdAndUpdate(postId, {
           upvote: post.upvote.filter(downvoteUserId => downvoteUserId.toString() !== loginUser._id),
           vote: post.vote.filter(voteUserId => voteUserId.toString() !== loginUser._id)
         })
 
-        return 'already upvoted post, remove upvote'
+        // return 'already upvoted post, remove upvote'
+        return upvotedPost
       }
 
-      return 'this line should not occur'
+      return 'upvote: this line should not occur'
     },
 
-    // upvote: async (_, { postId }, context) => {
-    //   const loginUser = checkAuth(context)
-
-    //   // const user = await User.findById(loginUser.id)
-
-    //   const post = await Post.findById(postId)
-
-    //   // first time upvoted
-    //   if (!post.upvote.includes(loginUser._id)) {
-    //     const newPost = await Post.findByIdAndUpdate(postId, {
-    //       upvote: post.upvote.concat(loginUser._id),
-    //       vote: post.vote.concat(loginUser._id)
-    //     })
-
-    //     console.log('newPost._doc', newPost._doc)
-    //     return "upvoted"
-    //   }
-
-    //   // undo upvote
-
-    //   await Post.findByIdAndUpdate(postId, {
-    //     upvote: post.upvote.filter(upvoteId => upvoteId.toString() !== loginUser._id),
-    //     vote: post.vote.filter(voteId => voteId.toString() !== loginUser._id),
-    //   })
-
-    //   return "dis-upvoted"
-    // },
-
     downvote: async (_, { postId }, context) => {
+      let downvotedPost
       const loginUser = checkAuth(context)
-
-      // const user = await User.findById(loginUser.id)
 
       const post = await Post.findById(postId)
 
       // First time vote
       if (!post.vote.includes(loginUser._id)) {
-        await Post.findByIdAndUpdate(postId, {
+        downvotedPost = await Post.findByIdAndUpdate(postId, {
           downvote: post.downvote.concat(loginUser._id),
           vote: post.vote.concat(loginUser._id)
         })
 
-        return 'First time voted and downvoted.'
+        // return 'First time voted and downvoted.'
+        return downvotedPost
       }
 
       // upvoted or already downvoted
 
       // remove upvoted 
       if (post.upvote.includes(loginUser._id)) {
-        await Post.findByIdAndUpdate(postId, {
+        downvotedPost = await Post.findByIdAndUpdate(postId, {
           upvote: post.upvote.filter(upvotedUserId => upvotedUserId.toString() !== loginUser._id),
           downvote: post.downvote.concat(loginUser._id)
         })
 
-        return 'Remove upvote. Downvote this post.'
+        // return 'Remove upvote. Downvote this post.'
+        return downvotedPost
       }
 
       // already downvoted
 
       if (post.downvote.includes(loginUser._id)) {
-        await Post.findByIdAndUpdate(postId, {
+        downvotedPost = await Post.findByIdAndUpdate(postId, {
           downvote: post.downvote.filter(downvoteUserId => downvoteUserId.toString() !== loginUser._id),
           vote: post.vote.filter(voteUserId => voteUserId.toString() !== loginUser._id)
         })
 
-        return 'already downvoted post, remove downvote'
+        // return 'already downvoted post, remove downvote'
+        return downvotedPost
       }
 
       return 'this line should not occur'

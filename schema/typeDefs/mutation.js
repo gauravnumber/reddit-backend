@@ -17,10 +17,12 @@ module.exports = `
 
    upvote(
      postId: String!
-   ): String!
+   ): Post!
+  #  ): String!
 
    downvote(
      postId: String!
-   ): String!
+   ): Post!
+  #  ): String!
  }
 `;
