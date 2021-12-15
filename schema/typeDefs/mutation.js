@@ -13,6 +13,7 @@ module.exports = `#graphql
    post(
      title: String!
      body: String!
+     subreddit: String!
    ): Post!
 
    upvote(
@@ -27,5 +28,9 @@ module.exports = `#graphql
      postId: String!
      body: String!
    ): Comment!
+
+   setSubreddit(
+     name: String!
+   ): String!
  }
 `;
