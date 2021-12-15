@@ -97,5 +97,79 @@ module.exports = {
       return "dis-upvoted"
     },
 
+    downvote: async (_, { postId }, context) => {
+      const loginUser = checkAuth(context)
+
+      // const user = await User.findById(loginUser.id)
+
+      const post = await Post.findById(postId)
+
+      // First time vote
+      if (!post.vote.includes(loginUser._id)) {
+        await Post.findByIdAndUpdate(postId, {
+          downvote: post.downvote.concat(loginUser._id),
+          vote: post.vote.concat(loginUser._id)
+        })
+
+        return 'First time voted and downvoted.'
+      }
+
+      // upvoted or already downvoted
+
+      // remove upvoted 
+      if (post.upvote.includes(loginUser._id)) {
+        await Post.findByIdAndUpdate(postId, {
+          upvote: post.upvote.filter(upvotedUserId => upvotedUserId.toString() !== loginUser._id),
+          downvote: post.downvote.concat(loginUser._id)
+        })
+
+        return 'Remove upvote. Downvote this post.'
+      }
+
+      // already downvoted
+
+      if (post.downvote.includes(loginUser._id)) {
+        await Post.findByIdAndUpdate(postId, {
+          downvote: post.downvote.filter(downvoteUserId => downvoteUserId.toString() !== loginUser._id),
+          vote: post.vote.filter(voteUserId => voteUserId.toString() !== loginUser._id)
+        })
+
+        return 'already downvoted post, remove downvote'
+      }
+
+      return 'this line should not occur'
+      // // first time downvoted
+      // if (!post.downvote.includes(loginUser._id)) {
+
+      //   // if (post.vote.includes(loginUser._id)) {
+      //   //   await Post.findByIdAndUpdate(postId, {
+      //   //     vote: post.vote.filter(userId => userId.toString() !== loginUser._id)
+      //   //   })
+      //   // }
+
+      //   const newPost = await Post.findByIdAndUpdate(postId, {
+      //     downvote: post.downvote.concat(loginUser._id),
+      //   })
+
+      //   if (!post.vote.includes(loginUser._id)) {
+      //     await Post.findByIdAndUpdate(postId, {
+      //       vote: post.vote.concat(loginUser._id)
+      //     })
+      //   }
+
+      //   console.log('newPost._doc', newPost._doc)
+      //   return "downvoted"
+      // }
+
+      // undo downvote
+
+      await Post.findByIdAndUpdate(postId, {
+        downvote: post.downvote.filter(downvoteId => downvoteId.toString() !== loginUser._id),
+        vote: post.vote.filter(voteId => voteId.toString() !== loginUser._id),
+      })
+
+      return "dis-downvoted"
+    },
+
   }
 }

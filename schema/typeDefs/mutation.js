@@ -18,5 +18,9 @@ module.exports = `
    upvote(
      postId: String!
    ): String!
+
+   downvote(
+     postId: String!
+   ): String!
  }
 `;
