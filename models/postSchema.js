@@ -41,6 +41,11 @@ const postSchema = new Schema({
   createdAt: {
     type: Date,
     required: true,
+  },
+
+  subreddit: {
+    type: Schema.Types.ObjectId,
+    ref: 'Subreddit',
   }
 })
 

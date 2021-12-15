@@ -25,6 +25,7 @@ module.exports = `#graphql
     totalNumOfVote: Int!
     comment: [Comment]!
     createdAt: String!
+    subreddit: Subreddit!
   }
   
   type Subreddit {

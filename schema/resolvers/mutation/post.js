@@ -1,20 +1,30 @@
 const checkAuth = require('@context/check-auth')
 
 const Post = require('@models/postSchema')
+const Subreddit = require('@models/subredditSchema')
 
 module.exports = {
   Mutation: {
-    post: async (_, { title, body }, context) => {
+    post: async (_, { title, body, subreddit }, context) => {
       const loginUser = checkAuth(context)
 
-      const newPost = new Post({
+      const post = new Post({
         title,
         body,
         owner: loginUser._id,
         createdAt: new Date().toISOString(),
+        subreddit,
       })
 
-      return await newPost.save()
+      const newPost = await post.save()
+
+      // refactoring findByIdAndUpdate
+      const subredditId = await Subreddit.findById(subreddit)
+      await Subreddit.findByIdAndUpdate(subreddit, {
+        post: subredditId.post.concat(newPost._id)
+      })
+
+      return newPost
     },
 
   }
