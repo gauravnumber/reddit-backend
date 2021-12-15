@@ -1,4 +1,4 @@
-module.exports = `
+module.exports = `#graphql
  type Mutation {
    register(
      username: String!
@@ -18,11 +18,14 @@ module.exports = `
    upvote(
      postId: String!
    ): Post!
-  #  ): String!
 
    downvote(
      postId: String!
    ): Post!
-  #  ): String!
+
+   setComment(
+     postId: String!
+     body: String!
+   ): Comment!
  }
 `;

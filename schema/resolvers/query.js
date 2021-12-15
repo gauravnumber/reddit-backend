@@ -8,7 +8,7 @@ module.exports = {
   },
   Post: {
     owner: async (parent) => {
-      const loginUser = await User.findById(parent.id)
+      const loginUser = await User.findById(parent._id)
 
       // console.log('loginUser._doc', loginUser._doc)
       return loginUser
