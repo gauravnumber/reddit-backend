@@ -1,3 +1,5 @@
+const { AuthenticationError, UserInputError } = require('apollo-server')
+
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
