@@ -76,26 +76,69 @@ module.exports = {
 
       const post = await Post.findById(postId)
 
-      // first time upvoted
-      if (!post.upvote.includes(loginUser._id)) {
-        const newPost = await Post.findByIdAndUpdate(postId, {
+      // First time vote
+      if (!post.vote.includes(loginUser._id)) {
+        await Post.findByIdAndUpdate(postId, {
           upvote: post.upvote.concat(loginUser._id),
           vote: post.vote.concat(loginUser._id)
         })
 
-        console.log('newPost._doc', newPost._doc)
-        return "upvoted"
+        return 'First time voted and upvoted.'
       }
 
-      // undo upvote
+      // already downvoted or already upvoted
 
-      await Post.findByIdAndUpdate(postId, {
-        upvote: post.upvote.filter(upvoteId => upvoteId.toString() !== loginUser._id),
-        vote: post.vote.filter(voteId => voteId.toString() !== loginUser._id),
-      })
+      // remove downvote 
+      if (post.downvote.includes(loginUser._id)) {
+        await Post.findByIdAndUpdate(postId, {
+          downvote: post.upvote.filter(upvotedUserId => upvotedUserId.toString() !== loginUser._id),
+          upvote: post.upvote.concat(loginUser._id)
+        })
 
-      return "dis-upvoted"
+        return 'Remove downvote. Upvote this post.'
+      }
+
+      // already upvoted
+
+      if (post.upvote.includes(loginUser._id)) {
+        await Post.findByIdAndUpdate(postId, {
+          upvote: post.upvote.filter(downvoteUserId => downvoteUserId.toString() !== loginUser._id),
+          vote: post.vote.filter(voteUserId => voteUserId.toString() !== loginUser._id)
+        })
+
+        return 'already upvoted post, remove upvote'
+      }
+
+      return 'this line should not occur'
     },
+
+    // upvote: async (_, { postId }, context) => {
+    //   const loginUser = checkAuth(context)
+
+    //   // const user = await User.findById(loginUser.id)
+
+    //   const post = await Post.findById(postId)
+
+    //   // first time upvoted
+    //   if (!post.upvote.includes(loginUser._id)) {
+    //     const newPost = await Post.findByIdAndUpdate(postId, {
+    //       upvote: post.upvote.concat(loginUser._id),
+    //       vote: post.vote.concat(loginUser._id)
+    //     })
+
+    //     console.log('newPost._doc', newPost._doc)
+    //     return "upvoted"
+    //   }
+
+    //   // undo upvote
+
+    //   await Post.findByIdAndUpdate(postId, {
+    //     upvote: post.upvote.filter(upvoteId => upvoteId.toString() !== loginUser._id),
+    //     vote: post.vote.filter(voteId => voteId.toString() !== loginUser._id),
+    //   })
+
+    //   return "dis-upvoted"
+    // },
 
     downvote: async (_, { postId }, context) => {
       const loginUser = checkAuth(context)
@@ -138,37 +181,6 @@ module.exports = {
       }
 
       return 'this line should not occur'
-      // // first time downvoted
-      // if (!post.downvote.includes(loginUser._id)) {
-
-      //   // if (post.vote.includes(loginUser._id)) {
-      //   //   await Post.findByIdAndUpdate(postId, {
-      //   //     vote: post.vote.filter(userId => userId.toString() !== loginUser._id)
-      //   //   })
-      //   // }
-
-      //   const newPost = await Post.findByIdAndUpdate(postId, {
-      //     downvote: post.downvote.concat(loginUser._id),
-      //   })
-
-      //   if (!post.vote.includes(loginUser._id)) {
-      //     await Post.findByIdAndUpdate(postId, {
-      //       vote: post.vote.concat(loginUser._id)
-      //     })
-      //   }
-
-      //   console.log('newPost._doc', newPost._doc)
-      //   return "downvoted"
-      // }
-
-      // undo downvote
-
-      await Post.findByIdAndUpdate(postId, {
-        downvote: post.downvote.filter(downvoteId => downvoteId.toString() !== loginUser._id),
-        vote: post.vote.filter(voteId => voteId.toString() !== loginUser._id),
-      })
-
-      return "dis-downvoted"
     },
 
   }
