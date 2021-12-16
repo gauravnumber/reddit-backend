@@ -19,9 +19,11 @@ module.exports = {
       const newPost = await post.save()
 
       // refactoring findByIdAndUpdate
-      const subredditId = await Subreddit.findById(subreddit)
+      // const subredditId = await Subreddit.findById(subreddit)
       await Subreddit.findByIdAndUpdate(subreddit, {
-        post: subredditId.post.concat(newPost._id)
+        $push: {
+          post: newPost._id
+        }
       })
 
       return newPost
