@@ -31,6 +31,7 @@ module.exports = `#graphql
 
    setSubreddit(
      name: String!
-   ): String!
+   ): Subreddit!
+  #  ): String!
  }
 `;

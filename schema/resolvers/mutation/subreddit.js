@@ -7,9 +7,9 @@ module.exports = {
         name
       })
 
-      await subreddit.save()
+      return await subreddit.save()
 
-      return 'subreddit saved'
+      // return 'subreddit saved'
     }
   }
 }

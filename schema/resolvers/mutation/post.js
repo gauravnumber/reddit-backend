@@ -18,8 +18,6 @@ module.exports = {
 
       const newPost = await post.save()
 
-      // refactoring findByIdAndUpdate
-      // const subredditId = await Subreddit.findById(subreddit)
       await Subreddit.findByIdAndUpdate(subreddit, {
         $push: {
           post: newPost._id
