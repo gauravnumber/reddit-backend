@@ -38,6 +38,7 @@ module.exports = `#graphql
     show: String!
     getSubredditPost(
       subredditId: String!
+      sort: String
     ): [Post]!
     # ): String!
   }

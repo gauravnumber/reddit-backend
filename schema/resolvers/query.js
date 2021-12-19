@@ -7,12 +7,22 @@ const { sortByDesc } = require('@utils')
 module.exports = {
   Query: {
     show: () => "laugh",
-    getSubredditPost: async (_, { subredditId }) => {
+    getSubredditPost: async (_, { subredditId, sort = 'hot' }) => {
 
       const subreddit = await Subreddit.findById(subredditId).populate('post')
       // return subreddit.post 
       // return subreddit.post.sort(sortBy('createdAt'))
-      return subreddit.post.sort(sortByDesc('createdAt'))
+      if (sort === 'hot') {
+        return subreddit.post.sort(sortByDesc('createdAt'))
+      } else if (sort === 'top') {
+        // console.log('subreddit.post', subreddit.post)
+        let filterPost = subreddit.post.filter(p => p.upvote.length > 0)
+
+        let filterPostSort = filterPost.sort((a, b) => (a['upvote'].length > b['upvote'].length) ? -1 : 1)
+
+        return filterPostSort
+        // return subreddit.post
+      }
     }
 
   },
