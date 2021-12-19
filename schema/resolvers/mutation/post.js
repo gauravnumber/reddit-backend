@@ -14,6 +14,8 @@ module.exports = {
         owner: loginUser._id,
         createdAt: new Date().toISOString(),
         subreddit,
+        vote: [loginUser._id],
+        upvote: [loginUser._id],
       })
 
       const newPost = await post.save()
