@@ -37,7 +37,8 @@ module.exports = `#graphql
   type Query {
     show: String!
     getSubredditPost(
-      subredditId: String!
+      # subredditId: String!
+      name: String!
       sort: String
     ): [Post]!
     # ): String!
