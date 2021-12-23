@@ -13,7 +13,8 @@ module.exports = `#graphql
    post(
      title: String!
      body: String!
-     subreddit: String!
+     subredditName: String!
+    #  subreddit: String!
    ): Post!
 
    upvote(
