@@ -11,7 +11,11 @@ const userSchema = new Schema({
   passwordHash: {
     type: String,
     required: true,
-  }
+  },
+  post: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post'
+  }]
 })
 
 userSchema.plugin(validator)

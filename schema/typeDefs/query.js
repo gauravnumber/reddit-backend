@@ -3,6 +3,7 @@ module.exports = `#graphql
     _id: ID!
     username: String!
     token: String!
+    post: [Post]!
   }
 
   type Comment {
