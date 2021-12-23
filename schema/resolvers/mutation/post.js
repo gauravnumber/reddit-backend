@@ -2,6 +2,7 @@ const checkAuth = require('@context/check-auth')
 
 const Post = require('@models/postSchema')
 const Subreddit = require('@models/subredditSchema')
+const User = require('@models/userSchema')
 
 module.exports = {
   Mutation: {
@@ -23,6 +24,12 @@ module.exports = {
       const newPost = await post.save()
 
       await Subreddit.findByIdAndUpdate(subreddit._id, {
+        $push: {
+          post: newPost._id
+        }
+      })
+
+      await User.findByIdAndUpdate(loginUser._id, {
         $push: {
           post: newPost._id
         }
