@@ -16,7 +16,7 @@ module.exports = {
         upvotedPost = await Post.findByIdAndUpdate(postId, {
           upvote: post.upvote.concat(loginUser._id),
           vote: post.vote.concat(loginUser._id)
-        })
+        }, { new: true })
 
         // return 'First time voted and upvoted.'
         return upvotedPost
@@ -29,7 +29,7 @@ module.exports = {
         upvotedPost = await Post.findByIdAndUpdate(postId, {
           downvote: post.upvote.filter(upvotedUserId => upvotedUserId.toString() !== loginUser._id),
           upvote: post.upvote.concat(loginUser._id)
-        })
+        }, { new: true })
 
         // return 'Remove downvote. Upvote this post.'
         return upvotedPost
@@ -41,7 +41,7 @@ module.exports = {
         upvotedPost = await Post.findByIdAndUpdate(postId, {
           upvote: post.upvote.filter(downvoteUserId => downvoteUserId.toString() !== loginUser._id),
           vote: post.vote.filter(voteUserId => voteUserId.toString() !== loginUser._id)
-        })
+        }, { new: true })
 
         // return 'already upvoted post, remove upvote'
         return upvotedPost
