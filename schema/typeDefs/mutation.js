@@ -33,6 +33,11 @@ module.exports = `#graphql
    setSubreddit(
      name: String!
    ): Subreddit!
-  #  ): String!
+
+   deletePost(
+     username: String!
+     subredditName: String!
+     postId: String!
+   ): String!
  }
 `;
