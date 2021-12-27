@@ -3,6 +3,7 @@ const upvoteDownvote = require('./upvoteDownvote')
 const post = require('./post')
 const comment = require('./comment')
 const subreddit = require('./subreddit')
+const deletePost = require('./deletePost')
 
 module.exports = {
   Mutation: {
@@ -11,5 +12,6 @@ module.exports = {
     ...upvoteDownvote.Mutation,
     ...comment.Mutation,
     ...subreddit.Mutation,
+    ...deletePost.Mutation,
   }
 }
