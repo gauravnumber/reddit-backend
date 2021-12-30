@@ -6,7 +6,7 @@ module.exports = {
     owner: async (parent) => {
       const loginUser = await User.findById(parent.owner)
 
-      if (!loginUser) return { username: "u/deleted" };
+      if (!loginUser) return { username: "deleted" };
 
       return loginUser
     },
@@ -16,7 +16,7 @@ module.exports = {
       for (let index = 0; index < parent.upvote.length; index++) {
         const user = await User.findById(parent.upvote[index])
         if (!user) {
-          upvoteUser.push({ username: "u/deleted" })
+          upvoteUser.push({ username: "deleted" })
           continue
         }
         upvoteUser.push(user)
@@ -31,7 +31,7 @@ module.exports = {
         const user = await User.findById(parent.downvote[index])
 
         if (!user) {
-          downvoteUser.push({ username: "u/deleted" })
+          downvoteUser.push({ username: "deleted" })
           continue
         }
 
@@ -47,7 +47,7 @@ module.exports = {
         const user = await User.findById(parent.vote[index])
 
         if (!user) {
-          voteUser.push({ username: "u/deleted" })
+          voteUser.push({ username: "deleted" })
           continue
         }
 
@@ -65,7 +65,7 @@ module.exports = {
       const subreddit = await Subreddit.findById(parent.subreddit)
 
       if (!subreddit) {
-        return ({ name: "u/deleted" })
+        return ({ name: "deleted" })
       }
 
       return subreddit
