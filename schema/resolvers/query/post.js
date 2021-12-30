@@ -8,6 +8,8 @@ module.exports = {
       // console.log('parent', parent)
       const loginUser = await User.findById(parent.owner)
 
+      if (!loginUser) return { username: "u/deleted" };
+      // if (!loginUser) console.log("***************************************************************************************************************************************************************************")
       // console.log(loginUser)
 
       // console.log('loginUser._doc', loginUser._doc)

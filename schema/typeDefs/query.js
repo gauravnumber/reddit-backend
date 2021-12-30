@@ -45,5 +45,7 @@ module.exports = `#graphql
     getPostsByUser(
       username: String!
     ): [Post]!
+
+    getRecentPosts(name: String): [Post]!
   }
 `;
