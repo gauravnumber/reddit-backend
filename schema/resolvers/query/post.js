@@ -1,23 +1,25 @@
 const User = require('@models/userSchema')
+const Subreddit = require('@models/subredditSchema')
 
 module.exports = {
   Post: {
     owner: async (parent) => {
-      // return parent + 'hello owner'
-      // console.log(parent._id)
-      // console.log('parent', parent)
       const loginUser = await User.findById(parent.owner)
 
-      // console.log(loginUser)
+      if (!loginUser) return { username: "u/deleted" };
 
-      // console.log('loginUser._doc', loginUser._doc)
       return loginUser
     },
     upvote: async (parent) => {
       const upvoteUser = []
 
       for (let index = 0; index < parent.upvote.length; index++) {
-        upvoteUser.push(await User.findById(parent.upvote[index]))
+        const user = await User.findById(parent.upvote[index])
+        if (!user) {
+          upvoteUser.push({ username: "u/deleted" })
+          continue
+        }
+        upvoteUser.push(user)
       }
 
       return upvoteUser
@@ -26,7 +28,14 @@ module.exports = {
       const downvoteUser = []
 
       for (let index = 0; index < parent.downvote.length; index++) {
-        downvoteUser.push(await User.findById(parent.downvote[index]))
+        const user = await User.findById(parent.downvote[index])
+
+        if (!user) {
+          downvoteUser.push({ username: "u/deleted" })
+          continue
+        }
+
+        downvoteUser.push(user)
       }
 
       return downvoteUser
@@ -35,7 +44,14 @@ module.exports = {
       const voteUser = []
 
       for (let index = 0; index < parent.vote.length; index++) {
-        voteUser.push(await User.findById(parent.vote[index]))
+        const user = await User.findById(parent.vote[index])
+
+        if (!user) {
+          voteUser.push({ username: "u/deleted" })
+          continue
+        }
+
+        voteUser.push(user)
       }
 
       return voteUser
@@ -43,7 +59,17 @@ module.exports = {
 
     totalNumOfVote: (parent) => {
       return parent.upvote.length - parent.downvote.length
-    }
+    },
+
+    subreddit: async (parent) => {
+      const subreddit = await Subreddit.findById(parent.subreddit)
+
+      if (!subreddit) {
+        return ({ name: "u/deleted" })
+      }
+
+      return subreddit
+    },
 
   }
 }
