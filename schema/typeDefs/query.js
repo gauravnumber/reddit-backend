@@ -44,6 +44,7 @@ module.exports = `#graphql
 
     getPostsByUser(
       username: String!
+      sort: String
     ): [Post]!
 
     getRecentPosts: [Post]!
