@@ -23,7 +23,7 @@ module.exports = `#graphql
     vote: [User]!
     upvote: [User]!
     downvote: [User]!
-    totalNumOfVote: Int!
+    totalNumOfVotes: Int!
     comment: [Comment]!
     createdAt: String!
     subreddit: Subreddit!
