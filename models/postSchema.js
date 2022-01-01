@@ -49,4 +49,12 @@ const postSchema = new Schema({
   }
 })
 
+postSchema.virtual('totalNumOfVotes').get(function (value, virtual, doc) {
+  return this.upvote.length - this.downvote.length
+})
+
+postSchema.set('toObject', {
+  getters: true
+})
+
 module.exports = model('Post', postSchema)
