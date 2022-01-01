@@ -57,9 +57,9 @@ module.exports = {
       return voteUser
     },
 
-    totalNumOfVote: (parent) => {
-      return parent.upvote.length - parent.downvote.length
-    },
+    // totalNumOfVotes: (parent) => {
+    //   return parent.upvote.length - parent.downvote.length
+    // },
 
     subreddit: async (parent) => {
       const subreddit = await Subreddit.findById(parent.subreddit)
