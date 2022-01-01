@@ -47,6 +47,8 @@ module.exports = `#graphql
       sort: String
     ): [Post]!
 
-    getRecentPosts: [Post]!
+    getRecentPosts(
+      sort: String
+    ): [Post]!
   }
 `;

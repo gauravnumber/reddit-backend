@@ -21,7 +21,6 @@ module.exports = {
       ).populate('post')
 
       let filterPost = user.post
-      console.log('filterPost', filterPost)
 
       if (sort === 'hot') {
         return user.post.sort(sortByDesc('createdAt'))
