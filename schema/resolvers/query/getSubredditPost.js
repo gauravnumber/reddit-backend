@@ -13,7 +13,24 @@ module.exports = {
       } else if (sort === 'top:alltime') {
         let filterPost = subreddit.post.filter(p => p.upvote.length > 0)
 
-        let filterPostSort = filterPost.sort((a, b) => (a['upvote'].length > b['upvote'].length) ? -1 : 1)
+        filterPost = subreddit.post
+
+        console.log('subreddit.post', subreddit.post)
+
+        // console.log('typeof filterPost[0].upvote.length', typeof filterPost[0].upvote.length)
+        // const sortBy = (key) => {
+        //     return (a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);
+        // };
+        // [...array].sort(sortBy(key));
+
+        // sortByDesc(filterPost)
+
+
+        let filterPostSort = filterPost.sort((a, b) => (a["upvote"].length > b["upvote"].length) ? 1 : ((b["upvote"].length > a["upvote"].length) ? -1 : 0))
+        // let filterPostSort = filterPost.sort(sortByDesc("upvote"))
+
+        // let filterPostSort = filterPost.sort((a, b) => 
+        // (a['upvote'].length > b['upvote'].length) ? -1 : 1)
 
         return filterPostSort
       } else if (sort === 'top:week') {
