@@ -3,6 +3,7 @@ const { AuthenticationError, UserInputError } = require('apollo-server')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+const { SECRET } = require('@config')
 const User = require('@models/userSchema')
 
 module.exports = {
@@ -20,10 +21,9 @@ module.exports = {
       const token = jwt.sign({
         _id: res._id,
         username: res.username,
-      }, 'SECRET')
+      }, SECRET)
 
       return { token, ...res._doc }
-      // return { id: res._id, token, ...res._doc }
     },
 
     login: async (_, { username, password }) => {
@@ -39,13 +39,15 @@ module.exports = {
         throw new AuthenticationError('Password is incorrect.')
       }
 
+      console.log('SECRET', SECRET)
+
       const token = jwt.sign({
         _id: user._id,
         username: user.username,
-      }, 'SECRET')
+      }, SECRET)
+
 
       return { token, ...user._doc }
-      // return { id: user._id, token, ...user._doc }
     },
 
   }
