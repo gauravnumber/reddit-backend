@@ -9,7 +9,6 @@ module.exports = {
       const loginUser = checkAuth(context)
 
       const post = await Post.findById(postId)
-      // console.log('loginUser._id', loginUser._id)
 
       //? First time vote
       if (!post.vote.includes(loginUser._id)) {
@@ -54,8 +53,6 @@ module.exports = {
       const loginUser = checkAuth(context)
 
       const post = await Post.findById(postId)
-
-      // console.log('post', post)
 
       //? First time vote
       if (!post.vote.includes(loginUser._id)) {
