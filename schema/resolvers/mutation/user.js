@@ -39,7 +39,7 @@ module.exports = {
         throw new AuthenticationError('Password is incorrect.')
       }
 
-      console.log('SECRET', SECRET)
+      // console.log('SECRET', SECRET)
 
       const token = jwt.sign({
         _id: user._id,

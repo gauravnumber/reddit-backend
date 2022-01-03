@@ -4,6 +4,8 @@ const { ApolloServer } = require('apollo-server')
 const { typeDefs, resolvers } = require('./schema')
 const mongoose = require('mongoose')
 
+const { MONGODB_URI } = require('@config')
+
 const server = new ApolloServer({
   cors: true,
   typeDefs,
@@ -14,7 +16,8 @@ const server = new ApolloServer({
 server.listen().then(({ url }) => {
   console.log(`Server running at ${url}`)
 
-  mongoose.connect('mongodb://localhost:27017/reddit', {
+  // mongoose.connect('mongodb://localhost:27017/reddit', {
+  mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
