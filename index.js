@@ -5,6 +5,7 @@ const { typeDefs, resolvers } = require('./schema')
 const mongoose = require('mongoose')
 
 const server = new ApolloServer({
+  cors: true,
   typeDefs,
   resolvers,
   context: ({ req }) => ({ req }),
