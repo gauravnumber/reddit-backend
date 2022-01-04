@@ -4,7 +4,7 @@ const { ApolloServer } = require('apollo-server')
 const { typeDefs, resolvers } = require('./schema')
 const mongoose = require('mongoose')
 
-const { MONGODB_URI } = require('@config')
+const { MONGODB_URI, PORT } = require('@config')
 
 const server = new ApolloServer({
   cors: true,
@@ -13,7 +13,7 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req }),
 })
 
-server.listen().then(({ url }) => {
+server.listen({ port: PORT }).then(({ url }) => {
   console.log(`Server running at ${url}`)
 
   // mongoose.connect('mongodb://localhost:27017/reddit', {
