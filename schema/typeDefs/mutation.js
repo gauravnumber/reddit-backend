@@ -38,6 +38,7 @@ module.exports = `#graphql
      username: String!
      subredditName: String!
      postId: String!
-   ): String!
+   ): Post
+  #  ): String!
  }
 `;
