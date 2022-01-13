@@ -19,9 +19,9 @@ module.exports = {
           post: user.post.filter(pId => pId.toString() !== postId)
         })
 
-        await Post.findByIdAndDelete(postId)
+        return await Post.findByIdAndDelete(postId)
 
-        return "authorized person delete"
+        // return "authorized person delete"
       }
 
       return "unauthorized"
