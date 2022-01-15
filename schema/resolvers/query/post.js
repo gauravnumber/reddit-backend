@@ -69,7 +69,12 @@ module.exports = {
       }
 
       return subreddit
+
     },
+
+    comment: async (parent) => {
+      console.log('parent', parent)
+    }
 
   }
 }

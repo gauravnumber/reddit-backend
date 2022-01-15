@@ -3,6 +3,7 @@ const getSubredditPost = require('./getSubredditPost')
 const getPostsByUser = require('./getPostsByUser')
 const getRecentPosts = require('./getRecentPosts')
 const post = require('./post')
+const comment = require('./comment')
 
 module.exports = {
   Query: {
@@ -13,5 +14,8 @@ module.exports = {
   },
   Post: {
     ...post.Post
+  },
+  Comment: {
+    ...comment.Comment
   },
 }
