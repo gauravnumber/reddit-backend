@@ -10,7 +10,8 @@ module.exports = {
       // const { postId, commentId } = id
 
       const user = checkAuth(context)
-      // console.log(`user`, user)
+
+      if (!postId && !commentId) throw new Error("Provide one id, postId or commentId")
 
       const comment = new Comment({
         body,
