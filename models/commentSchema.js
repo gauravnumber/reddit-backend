@@ -20,7 +20,7 @@ const commentSchema = new Schema({
   }],
   comment: [{
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Comment',
   }],
 })
 

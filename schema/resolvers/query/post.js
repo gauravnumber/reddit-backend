@@ -75,9 +75,12 @@ module.exports = {
     },
 
     comment: async (parent) => {
-      const post = await Post.findById(parent._id).populate('comment')
+      const post = await Post.findById(parent._id).populate({
+        path: 'comment',
+        populate: 'comment'
+      })
 
-      // console.log('parent', parent)
+      // console.log('post', post)
       return post.comment
       // console.log('post.comment', post.comment)
     }
