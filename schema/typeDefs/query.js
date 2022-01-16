@@ -9,9 +9,10 @@ module.exports = `#graphql
   type Comment {
     _id: ID!
     body: String!
+    owner: User!
     upvote: [User]!
     downvote: [User]!
-    totalNumOfVote: Int!
+    totalNumOfVotes: Int!
     comment: [Comment]!
   }
 
@@ -50,5 +51,9 @@ module.exports = `#graphql
     getRecentPosts(
       sort: String
     ): [Post]!
+
+    getSinglePost(
+      postId: String!
+    ): Post!
   }
 `;

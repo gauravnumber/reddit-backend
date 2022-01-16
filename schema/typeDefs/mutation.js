@@ -26,7 +26,9 @@ module.exports = `#graphql
    ): Post!
 
    setComment(
-     postId: String!
+    #  id: String!
+     postId: String
+     commentId: String
      body: String!
    ): Comment!
 
@@ -39,6 +41,7 @@ module.exports = `#graphql
      subredditName: String!
      postId: String!
    ): Post
+
   #  ): String!
  }
 `;

@@ -6,6 +6,10 @@ const commentSchema = new Schema({
     required: true,
     minlength: 1,
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   upvote: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -16,8 +20,17 @@ const commentSchema = new Schema({
   }],
   comment: [{
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Comment',
   }],
 })
+
+commentSchema.virtual('totalNumOfVotes').get(function (value, virtual, doc) {
+  return this.upvote.length - this.downvote.length
+})
+
+commentSchema.set('toObject', {
+  getters: true
+})
+
 
 module.exports = model('Comment', commentSchema)
