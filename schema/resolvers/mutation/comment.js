@@ -5,7 +5,10 @@ const Comment = require('@models/commentSchema')
 
 module.exports = {
   Mutation: {
-    setComment: async (_, { postId, body }, context) => {
+    // setComment: async (_, { id, body }, context) => {
+    setComment: async (_, { postId, commentId, body }, context) => {
+      // const { postId, commentId } = id
+
       const user = checkAuth(context)
       // console.log(`user`, user)
 
@@ -20,12 +23,19 @@ module.exports = {
         // console.log(`doc`, doc)
         // need code refactoring
         // const post = await Post.findById(postId)
-
-        await Post.findByIdAndUpdate(postId, {
-          $push: {
-            comment: doc._id
-          }
-        })
+        if (commentId) {
+          await Comment.findByIdAndUpdate(commentId, {
+            $push: {
+              comment: doc._id
+            }
+          })
+        } else if (postId) {
+          await Post.findByIdAndUpdate(postId, {
+            $push: {
+              comment: doc._id
+            }
+          })
+        }
         // await Post.findByIdAndUpdate(postId, {
         //   comment: post.comment.concat(doc._id)
         //   // comment: post.comment.concat(comment._id)
