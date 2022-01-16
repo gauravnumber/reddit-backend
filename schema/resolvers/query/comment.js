@@ -1,5 +1,5 @@
 const User = require('@models/userSchema')
-const Comment = require('@models/commentSchema')
+// const Comment = require('@models/commentSchema')
 
 module.exports = {
   Comment: {

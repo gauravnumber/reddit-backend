@@ -1,5 +1,7 @@
+const Post = require('@models/postSchema')
 const User = require('@models/userSchema')
 const Subreddit = require('@models/subredditSchema')
+const Comment = require('@models/commentSchema')
 
 module.exports = {
   Post: {
@@ -73,7 +75,11 @@ module.exports = {
     },
 
     comment: async (parent) => {
-      console.log('parent', parent)
+      const post = await Post.findById(parent._id).populate('comment')
+
+      // console.log('parent', parent)
+      return post.comment
+      // console.log('post.comment', post.comment)
     }
 
   }

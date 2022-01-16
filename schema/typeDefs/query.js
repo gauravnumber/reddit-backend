@@ -51,5 +51,9 @@ module.exports = `#graphql
     getRecentPosts(
       sort: String
     ): [Post]!
+
+    getSinglePost(
+      postId: String!
+    ): Post!
   }
 `;
