@@ -26,9 +26,9 @@ module.exports = `#graphql
    ): Post!
 
    setComment(
-     id: String!
-    #  postId: String
-    #  commentId: String
+    #  id: String!
+     postId: String
+     commentId: String
      body: String!
    ): Comment!
 
