@@ -5,7 +5,10 @@ const Comment = require('@models/commentSchema')
 
 module.exports = {
   Mutation: {
-    setComment: async (_, { postId, commentId, body }, context) => {
+    // setComment: async (_, { postId, commentId, body }, context) => {
+    setComment: async (_, { id, body }, context) => {
+      const { postId, commentId } = id
+
       const user = checkAuth(context)
       // console.log(`user`, user)
 
