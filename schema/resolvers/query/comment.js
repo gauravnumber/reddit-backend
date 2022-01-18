@@ -4,7 +4,14 @@ const Comment = require('@models/commentSchema')
 module.exports = {
   Comment: {
     owner: async (parent) => {
-      return await User.findById(parent.owner)
+      const user = await User.findById(parent.owner)
+
+      if (!user) {
+        // console.log('user', user)
+        return { _id: parent.owner, username: "deleted" }
+      }
+
+      return user
     },
     comment: async (parent) => {
       const parentComment = await Comment.findById(parent._id).populate('comment')
