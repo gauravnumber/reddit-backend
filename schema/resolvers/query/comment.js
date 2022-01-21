@@ -17,6 +17,36 @@ module.exports = {
       const parentComment = await Comment.findById(parent._id).populate('comment')
 
       return parentComment.comment
-    }
+    },
+    upvote: async (parent) => {
+      const comment = await Comment.findById(parent._id).populate({
+        path: 'upvote',
+        // select: 'upvote'
+      })
+
+      // if (!user) {
+      //   return {
+      //     _id: parent.owner, owner: {
+      //       username: "deleted"
+      //     }
+      //   }
+      // }
+
+      return comment.upvote
+    },
+
+    downvote: async (parent) => {
+      const comment = await Comment.findById(parent._id).populate('downvote')
+
+      // if (!user) {
+      //   return {
+      //     _id: parent.owner, owner: {
+      //       username: "deleted"
+      //     }
+      //   }
+      // }
+
+      return comment.downvote
+    },
   }
 }
