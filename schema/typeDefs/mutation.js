@@ -27,7 +27,7 @@ module.exports = `#graphql
 
    upvoteComment(
      commentId: String!
-   ): String!
+   ): Comment!
 
    downvoteComment(
      commentId: String!

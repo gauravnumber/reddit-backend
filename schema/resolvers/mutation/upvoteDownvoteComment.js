@@ -12,35 +12,29 @@ module.exports = {
       //? If User already downvoted
       if (comment.downvote.some(userId => userId.toString() === loginUser._id)) {
         //? Remove downvote
-        const c = await Comment.findByIdAndUpdate(commentId, {
+        await Comment.findByIdAndUpdate(commentId, {
           downvote: comment.downvote.filter(userId => userId.toString() !== loginUser._id)
         }, { new: true })
 
-        console.log(`upvote: remove downvote`, c)
       }
 
       //? If user already upvote
       if (comment.upvote.some(userId => userId.toString() === loginUser._id)) {
         //? Remove upvote
-        const c = await Comment.findByIdAndUpdate(commentId, {
+        const resultComment = await Comment.findByIdAndUpdate(commentId, {
           upvote: comment.upvote.filter(userId => userId.toString() !== loginUser._id)
         }, { new: true })
 
-        console.log(`upvote: remove upvote`, c)
-
-        return "upvote: remove upvote"
-
+        return resultComment
       } else {
         //? User first time upvote
-        console.log('not present')
-        const c = await Comment.findByIdAndUpdate(commentId, {
+        const resultComment = await Comment.findByIdAndUpdate(commentId, {
           $push: {
             upvote: loginUser._id
           }
         }, { new: true })
 
-        console.log(`c`, c)
-        return 'first time upvote'
+        return resultComment
       }
     },
     downvoteComment: async (_, { commentId }, context) => {
@@ -55,8 +49,6 @@ module.exports = {
         await Comment.findByIdAndUpdate(commentId, {
           upvote: comment.upvote.filter(userId => userId.toString() !== loginUser._id)
         }, { new: true })
-
-        // console.log(`downvote: remove upvote`, c)
       }
 
       //? If user already downvote
@@ -78,8 +70,6 @@ module.exports = {
         }, { new: true })
 
         return resultComment
-        // console.log(`c`, c)
-        // return 'first time downvote'
       }
     }
   }
