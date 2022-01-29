@@ -1,23 +1,10 @@
 const USER = require('./user')
+const POST = require('./post')
 
 module.exports = `#graphql
  type Mutation {
   ${USER}
-
-   post(
-     title: String!
-     body: String!
-     subredditName: String!
-    #  subreddit: String!
-   ): Post!
-
-   upvote(
-     postId: String!
-   ): Post!
-
-   downvote(
-     postId: String!
-   ): Post!
+  ${POST}
 
    upvoteComment(
      commentId: String!
@@ -38,11 +25,11 @@ module.exports = `#graphql
      name: String!
    ): Subreddit!
 
-   deletePost(
-     username: String!
-     subredditName: String!
-     postId: String!
-   ): Post
+  #  deletePost(
+  #    username: String!
+  #    subredditName: String!
+  #    postId: String!
+  #  ): Post
 
   #  ): String!
  }
