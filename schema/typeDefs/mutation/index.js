@@ -1,36 +1,15 @@
 const USER = require('./user')
 const POST = require('./post')
+const COMMENT = require('./comment')
 
 module.exports = `#graphql
  type Mutation {
   ${USER}
   ${POST}
+  ${COMMENT}
 
-   upvoteComment(
-     commentId: String!
-   ): Comment!
-
-   downvoteComment(
-     commentId: String!
-   ): Comment!
-
-   setComment(
-    #  id: String!
-     postId: String
-     commentId: String
-     body: String!
-   ): Comment!
-
-   setSubreddit(
-     name: String!
-   ): Subreddit!
-
-  #  deletePost(
-  #    username: String!
-  #    subredditName: String!
-  #    postId: String!
-  #  ): Post
-
-  #  ): String!
+  setSubreddit(
+    name: String!
+  ): Subreddit!
  }
 `;
