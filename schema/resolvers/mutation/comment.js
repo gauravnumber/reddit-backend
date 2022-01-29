@@ -5,10 +5,7 @@ const Comment = require('@models/commentSchema')
 
 module.exports = {
   Mutation: {
-    // setComment: async (_, { id, body }, context) => {
     setComment: async (_, { postId, commentId, body }, context) => {
-      // const { postId, commentId } = id
-
       const user = checkAuth(context)
 
       if (!postId && !commentId) throw new Error("Provide one id, postId or commentId")
@@ -21,9 +18,6 @@ module.exports = {
       comment.save(async (err, doc) => {
         if (err) return new Error(err)
 
-        // console.log(`doc`, doc)
-        // need code refactoring
-        // const post = await Post.findById(postId)
         if (commentId) {
           await Comment.findByIdAndUpdate(commentId, {
             $push: {
@@ -37,14 +31,33 @@ module.exports = {
             }
           })
         }
-        // await Post.findByIdAndUpdate(postId, {
-        //   comment: post.comment.concat(doc._id)
-        //   // comment: post.comment.concat(comment._id)
-        // })
       })
 
       return comment
-      // return 'set comment'
-    }
+    },
+
+    deleteComment: async (_, { commentId }, context) => {
+      let comment
+      const loginUser = checkAuth(context)
+
+      const findComment = await Comment.findById(commentId)
+
+      if (!findComment) {
+        return ({
+          // ? generate new id
+          _id: "deleted",
+          body: "deleted"
+        })
+      }
+
+
+      if (findComment.owner._id.toString() === loginUser._id) {
+        comment = await Comment.findByIdAndDelete(commentId)
+
+        return comment
+      } else {
+        throw new Error("You unauthorized to delete this comment.")
+      }
+    },
   }
 }
