@@ -1,14 +1,8 @@
+const USER = require('./user')
+
 module.exports = `#graphql
  type Mutation {
-   register(
-     username: String!
-     password: String!
-   ): User!
-
-   login(
-     username: String!
-     password: String!
-   ): User!
+  ${USER}
 
    post(
      title: String!
