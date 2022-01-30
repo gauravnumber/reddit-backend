@@ -1,3 +1,5 @@
+const { sortByDesc } = require('@utils')
+
 const User = require('@models/userSchema')
 const Comment = require('@models/commentSchema')
 
@@ -14,9 +16,25 @@ module.exports = {
       return user
     },
     comment: async (parent) => {
-      const parentComment = await Comment.findById(parent._id).populate('comment')
+      const parentComment = await Comment.findById(parent._id).populate({
+        path: 'comment',
+        // sort: {
+        //   totalNumOfVotes: -1,
+        // }
+        //  match: {
+        //   totalNumOfVotes: {
+        //     $gt: 0
+        //   }
+        // }
+      })
+      // .sort({
+      //   totalNumOfVotes: -1
+      // })
 
-      return parentComment.comment
+      // console.log(`parentComment`, parentComment)
+
+      return parentComment.comment.sort(sortByDesc("totalNumOfVotes"))
+      // return parentComment.comment
     },
     upvote: async (parent) => {
       const comment = await Comment.findById(parent._id).populate({

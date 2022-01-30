@@ -1,7 +1,9 @@
+const { sortByDesc } = require('@utils')
+
 const Post = require('@models/postSchema')
 const User = require('@models/userSchema')
 const Subreddit = require('@models/subredditSchema')
-const Comment = require('@models/commentSchema')
+// const Comment = require('@models/commentSchema')
 
 module.exports = {
   Post: {
@@ -77,11 +79,22 @@ module.exports = {
     comment: async (parent) => {
       const post = await Post.findById(parent._id).populate({
         path: 'comment',
-        populate: 'comment'
+        // match: {
+        //   totalNumOfVotes: {
+        //     $eq: 1
+        //   }
+        // },
+        // sort: {
+        //   totalNumOfVotes: -1
+        // }
+        // select: "upvote downvote"
+
+        // populate: 'comment'
       })
 
       // console.log('post', post)
-      return post.comment
+      return post.comment.sort(sortByDesc("totalNumOfVotes"))
+      // return post.comment
       // console.log('post.comment', post.comment)
     }
 

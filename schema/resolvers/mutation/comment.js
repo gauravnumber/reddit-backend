@@ -44,8 +44,7 @@ module.exports = {
 
       if (!findComment) {
         return ({
-          // ? generate new id
-          _id: "deleted",
+          _id: commentId,
           body: "deleted"
         })
       }
