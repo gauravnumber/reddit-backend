@@ -3,7 +3,6 @@ module.exports = `#graphql
     title: String!
     body: String!
     subredditName: String!
-   #  subreddit: String!
   ): Post!
 
   upvote(
@@ -15,9 +14,13 @@ module.exports = `#graphql
   ): Post!
 
   deletePost(
-     username: String!
-     subredditName: String!
-     postId: String!
-   ): Post
+    username: String!
+    subredditName: String!
+    postId: String!
+  ): Post
+
+  editPost(
+    postId: String!
+  ): String!
 
 `
