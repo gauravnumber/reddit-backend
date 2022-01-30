@@ -18,5 +18,9 @@ module.exports = `#graphql
     getSinglePost(
       postId: String!
     ): Post!
+
+    # sortComments(
+    #   commentId:
+    # )
   }
 `;
