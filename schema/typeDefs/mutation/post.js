@@ -15,9 +15,14 @@ module.exports = `#graphql
   ): Post!
 
   deletePost(
-     username: String!
-     subredditName: String!
-     postId: String!
-   ): Post
+    username: String!
+    subredditName: String!
+    postId: String!
+  ): Post
+
+  editPost(
+    postId: String!
+    body: String!
+  ): Post!
 
 `
