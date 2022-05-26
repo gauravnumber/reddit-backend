@@ -22,6 +22,7 @@ module.exports = `#graphql
 
   editPost(
     postId: String!
-  ): String!
+    body: String!
+  ): Post!
 
 `
