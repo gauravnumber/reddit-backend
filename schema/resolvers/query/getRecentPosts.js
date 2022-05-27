@@ -26,7 +26,7 @@ module.exports = {
 
         return filterPost
       } else if (sort === 'top:month') {
-        filterPost = post.filter(post => post.createdAt > Date.now() - 1000 * 3600 * 24 * 7 * 30)
+        filterPost = post.filter(post => post.createdAt > Date.now() - 1000 * 3600 * 24 * 30)
           .sort(sortByDesc("totalNumOfVotes"))
 
         return filterPost
