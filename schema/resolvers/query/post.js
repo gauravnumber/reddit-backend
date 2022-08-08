@@ -96,6 +96,12 @@ module.exports = {
       return post.comment.sort(sortByDesc("totalNumOfVotes"))
       // return post.comment
       // console.log('post.comment', post.comment)
+    },
+    createdAt: (parent) => {
+      // console.log(parent)
+      // console.log(parent.createdAt.toLocaleDateString('en-IN'))
+      // return new Date(parseInt(parent.createdAt)).toLocaleDateString('en-IN')
+      return parent.createdAt.toLocaleDateString('en-IN')
     }
 
   }
