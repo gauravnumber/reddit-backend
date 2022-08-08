@@ -13,7 +13,7 @@ module.exports = `#graphql
     upvote: [User]!
     downvote: [User]!
     totalNumOfVotes: Int!
-    comment: [Comment]!
+    comment: [Comment]
   }
 
   type Post {
@@ -25,7 +25,7 @@ module.exports = `#graphql
     upvote: [User]!
     downvote: [User]!
     totalNumOfVotes: Int!
-    comment: [Comment]!
+    comment: [Comment]
     createdAt: String!
     subreddit: Subreddit!
   }

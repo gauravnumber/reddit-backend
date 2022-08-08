@@ -19,6 +19,14 @@ module.exports = `#graphql
       postId: String!
     ): Post!
 
+    getPosts(
+      subredditName: String
+      username: String
+      sort: String
+      type: String!
+    # ): String!
+    ): [Post]!
+
     # sortComments(
     #   commentId:
     # )
