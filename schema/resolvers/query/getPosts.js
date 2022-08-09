@@ -12,6 +12,7 @@ module.exports = {
       switch (type) {
         case "recent":
           post = await Post.find()
+          // console.log(await Post.find().sort({ title: 1 }).skip(0).limit(3))
           // return post
           break
 
