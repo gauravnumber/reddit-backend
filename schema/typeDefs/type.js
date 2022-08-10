@@ -21,7 +21,7 @@ module.exports = `#graphql
     title: String!
     body: String!
     owner: User!
-    vote: [User]!
+    # vote: [User]!
     upvote: [User]!
     downvote: [User]!
     totalNumOfVotes: Int!
