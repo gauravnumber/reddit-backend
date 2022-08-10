@@ -6,12 +6,20 @@ const Subreddit = require('@models/subredditSchema')
 
 module.exports = {
   Query: {
-    getPosts: async (_, { username, subredditName, sort, type }) => {
+    getPosts: async (_, { username, subredditName, sort, offset = 0, limit = 3, type }) => {
       let post;
 
       switch (type) {
         case "recent":
           post = await Post.find()
+          // console.log(post)
+          // post = await Post.find().where({
+          //   createdAt: {
+          //     $gte: new Date(2022, 7, 9)
+          //   }
+          // })
+          // post = await Post.find().limit(limit)
+          // console.log(await Post.find().select("_id"))
           // console.log(await Post.find().sort({ title: 1 }).skip(0).limit(3))
           // return post
           break
@@ -63,8 +71,8 @@ module.exports = {
         return filterPost
       }
 
-      // 
-      return post.sort(sortByDesc('createdAt'))
+      //? Sort by new
+      return post.sort(sortByDesc('createdAt')).slice(offset, offset + limit)
     }
   }
 }

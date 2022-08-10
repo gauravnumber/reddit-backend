@@ -44,22 +44,22 @@ module.exports = {
 
       return downvoteUser
     },
-    vote: async (parent) => {
-      const voteUser = []
+    // vote: async (parent) => {
+    //   const voteUser = []
 
-      for (let index = 0; index < parent.vote.length; index++) {
-        const user = await User.findById(parent.vote[index])
+    //   for (let index = 0; index < parent.vote.length; index++) {
+    //     const user = await User.findById(parent.vote[index])
 
-        if (!user) {
-          voteUser.push({ username: "deleted" })
-          continue
-        }
+    //     if (!user) {
+    //       voteUser.push({ username: "deleted" })
+    //       continue
+    //     }
 
-        voteUser.push(user)
-      }
+    //     voteUser.push(user)
+    //   }
 
-      return voteUser
-    },
+    //   return voteUser
+    // },
 
     // totalNumOfVotes: (parent) => {
     //   return parent.upvote.length - parent.downvote.length

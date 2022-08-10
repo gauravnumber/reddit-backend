@@ -23,6 +23,8 @@ module.exports = `#graphql
       subredditName: String
       username: String
       sort: String
+      offset: Int,
+      limit: Int,
       type: String!
     # ): String!
     ): [Post]!
