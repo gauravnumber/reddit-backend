@@ -71,7 +71,8 @@ module.exports = {
         return filterPost
       }
 
-      return post.sort(sortByDesc('createdAt'))
+      //? Sort by new
+      return post.sort(sortByDesc('createdAt')).slice(offset, offset + limit)
     }
   }
 }
