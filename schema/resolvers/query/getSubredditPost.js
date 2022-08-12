@@ -3,41 +3,61 @@ const { sortByDesc } = require('@utils')
 
 module.exports = {
   Query: {
-    // getSubredditPost: async (_, { subredditId, sort = 'hot' }) => {
-    getSubredditPost: async (_, { name, sort = 'hot' }) => {
-      const subreddit = await Subreddit.findOne({ name }).populate('post')
+    getSubredditPost: async (_, { name, sort = "new", offset = 0, limit = 10 }) => {
+      const today = new Date()
+      const calculatedDate = new Date()
+      let subreddit
 
-      if (sort === 'hot') {
-        return subreddit.post.sort(sortByDesc('createdAt'))
-      } else if (sort === 'top:alltime') {
-        let filterPost = subreddit.post
+      switch (sort) {
+        case "top:day":
+          calculatedDate.setDate(today.getDate() - 1)
+          break;
+        case "top:week":
+          calculatedDate.setDate(today.getDate() - 7)
+          break;
+        case "top:month":
+          calculatedDate.setMonth(today.getMonth() - 1)
+          break;
+        case "top:year":
+          calculatedDate.setFullYear(today.getFullYear() - 1)
+          break;
 
-        let filterPostSort = filterPost.sort(sortByDesc("totalNumOfVotes"))
+        case "top:alltime": break;
 
-        return filterPostSort
-      } else if (sort === 'top:week') {
-        let filterPost = subreddit.post
+        //? Sorting by new
+        default:
+          subreddit = await Subreddit.findOne({ name })
+            .populate({
+              path: 'post',
+              options: { sort: { createdAt: -1 } }
+            })
 
-        filterPost = filterPost.filter(post => post.createdAt > Date.now() - 1000 * 3600 * 24 * 7)
-          .sort(sortByDesc("totalNumOfVotes"))
-
-        return filterPost
-      } else if (sort === 'top:day') {
-        let filterPost = subreddit.post
-
-        filterPost = filterPost.filter(post => post.createdAt > Date.now() - 1000 * 3600 * 24)
-          .sort(sortByDesc("totalNumOfVotes"))
-
-        return filterPost
-      } else if (sort === 'top:month') {
-        let filterPost = subreddit.post
-
-        filterPost = filterPost.filter(post => post.createdAt > Date.now() - 1000 * 3600 * 24 * 30)
-          .sort(sortByDesc("totalNumOfVotes"))
-
-        return filterPost
+          return subreddit.post.slice(offset, offset + limit)
       }
-    }
 
+      if (sort === 'top:alltime') {
+        subreddit = await Subreddit.findOne({ name })
+          .populate({
+            path: 'post',
+          })
+
+      } else {
+        subreddit = await Subreddit.findOne({ name })
+          .populate({
+            path: 'post',
+            match: {
+              createdAt: {
+                $gte: calculatedDate
+              }
+            }
+          })
+
+      }
+
+      let filterPost = subreddit.post
+      let filterPostSort = filterPost.sort(sortByDesc("totalNumbersOfVotes"))
+
+      return filterPostSort.slice(offset, offset + limit)
+    }
   }
 }

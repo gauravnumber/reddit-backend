@@ -17,7 +17,7 @@ module.exports = {
         owner: loginUser._id,
         createdAt: new Date().toISOString(),
         subreddit: subreddit._id,
-        vote: [loginUser._id],
+        // vote: [loginUser._id],
         upvote: [loginUser._id],
       })
 

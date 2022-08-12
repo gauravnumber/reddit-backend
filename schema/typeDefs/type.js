@@ -13,19 +13,21 @@ module.exports = `#graphql
     upvote: [User]!
     downvote: [User]!
     totalNumOfVotes: Int!
-    comment: [Comment]!
+    comment: [Comment]
   }
 
   type Post {
     _id: ID!
     title: String!
-    body: String!
+    body: String
     owner: User!
-    vote: [User]!
+    # vote: [User]!
     upvote: [User]!
     downvote: [User]!
-    totalNumOfVotes: Int!
-    comment: [Comment]!
+    #! delete totalNumOfVotes
+    totalNumbersOfVotes: Int
+    # numOfVotes: Int
+    comment: [Comment]
     createdAt: String!
     subreddit: Subreddit!
   }
