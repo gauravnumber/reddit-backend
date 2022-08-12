@@ -66,5 +66,9 @@ module.exports = {
 
       return comment.downvote
     },
+    createdAt: (parent) => {
+      return parent.createdAt.toLocaleString('en-IN')
+    },
+
   }
 }

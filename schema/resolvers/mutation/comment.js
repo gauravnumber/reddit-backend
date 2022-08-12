@@ -12,8 +12,11 @@ module.exports = {
 
       const comment = new Comment({
         body,
-        owner: user._id
+        owner: user._id,
+        createdAt: new Date().toISOString(),
       })
+
+      // console.log('comment', comment)
 
       comment.save(async (err, doc) => {
         if (err) return new Error(err)
