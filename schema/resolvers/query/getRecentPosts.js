@@ -1,38 +1,83 @@
-const { sortByDesc } = require('@utils')
-
 const Post = require('@models/postSchema')
 
 module.exports = {
   Query: {
-    getRecentPosts: async (_, { sort }) => {
-      const post = await Post.find()
+    getRecentPosts: async (_, { sort, offset = 0, limit = 10 }) => {
+      const today = new Date()
+      let calculatedDate = new Date()
 
-      let filterPost
+      switch (sort) {
+        case "top:day":
+          calculatedDate.setDate(today.getDate() - 1)
+          break;
+        case "top:week":
+          calculatedDate.setDate(today.getDate() - 7)
+          break;
+        case "top:month":
+          calculatedDate.setMonth(today.getMonth() - 1)
+          break;
+        case "top:year":
+          calculatedDate.setFullYear(today.getFullYear() - 1)
+          break;
+        case "top:alltime":
+          return await Post.aggregate([
+            {
+              $match: {
+                createdAt: {
+                  $lte: calculatedDate
+                }
+              }
+            },
+            {
+              $addFields: {
+                'totalNumbersOfVotes': {
+                  $subtract: [{ $size: '$upvote' }, { $size: '$downvote' }]
+                }
+              },
+            },
 
-      if (sort === 'hot') {
-        return post.sort(sortByDesc('createdAt'))
-      } else if (sort === 'top:alltime') {
-        let filterPostSort = post.sort(sortByDesc("totalNumOfVotes"))
+            { $sort: { 'totalNumbersOfVotes': -1 } },
+            { $skip: offset },
+            { $limit: limit }
+          ])
 
-        return filterPostSort
-      } else if (sort === 'top:week') {
-        filterPost = post.filter(post => post.createdAt > Date.now() - 1000 * 3600 * 24 * 7)
-          .sort(sortByDesc("totalNumOfVotes"))
-
-        return filterPost
-      } else if (sort === 'top:day') {
-        filterPost = post.filter(post => post.createdAt > Date.now() - 1000 * 3600 * 24)
-          .sort(sortByDesc("totalNumOfVotes"))
-
-        return filterPost
-      } else if (sort === 'top:month') {
-        filterPost = post.filter(post => post.createdAt > Date.now() - 1000 * 3600 * 24 * 30)
-          .sort(sortByDesc("totalNumOfVotes"))
-
-        return filterPost
+        //? Sorting by new
+        default:
+          return await Post.aggregate([
+            {
+              $addFields: {
+                'totalNumbersOfVotes': {
+                  $subtract: [{ $size: '$upvote' }, { $size: '$downvote' }]
+                }
+              },
+            },
+            { $sort: { createdAt: -1 } },
+            { $skip: offset },
+            { $limit: limit }
+          ])
       }
 
-      return post
+      //? Sort by top day, week, month, year
+      return await Post.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: calculatedDate
+            }
+          }
+        },
+        {
+          $addFields: {
+            'totalNumbersOfVotes': {
+              $subtract: [{ $size: '$upvote' }, { $size: '$downvote' }]
+            }
+          },
+        },
+
+        { $sort: { 'totalNumbersOfVotes': -1 } },
+        { $skip: offset },
+        { $limit: limit }
+      ])
     }
   }
 }

@@ -11,17 +11,26 @@ module.exports = {
 
       switch (type) {
         case "recent":
-          post = await Post.find()
-          // console.log(post)
+          // post = await Post.find()
           // post = await Post.find().where({
           //   createdAt: {
           //     $gte: new Date(2022, 7, 9)
           //   }
           // })
-          // post = await Post.find().limit(limit)
-          // console.log(await Post.find().select("_id"))
-          // console.log(await Post.find().sort({ title: 1 }).skip(0).limit(3))
-          // return post
+
+          return await Post.aggregate([
+            {
+              $addFields: {
+                'totalNumbersOfVotes': {
+                  $subtract: [{ $size: '$upvote' }, { $size: '$downvote' }]
+                }
+              },
+            },
+            { $sort: { 'totalNumbersOfVotes': -1 } },
+            { $skip: offset },
+            { $limit: limit }
+          ])
+
           break
 
         case "user":
