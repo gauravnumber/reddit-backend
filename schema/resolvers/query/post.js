@@ -76,30 +76,31 @@ module.exports = {
 
     },
 
-    comment: async (parent) => {
-      const post = await Post.findById(parent._id).populate({
-        path: 'comment',
-        // match: {
-        //   totalNumOfVotes: {
-        //     $eq: 1
-        //   }
-        // },
-        // sort: {
-        //   totalNumOfVotes: -1
-        // }
-        // select: "upvote downvote"
+    // comment: async (parent) => {
+    //   const post = await Post.findById(parent._id).populate({
+    //     path: 'comment',
+    //     perDocumentLimit: 2
+    //     // match: {
+    //     //   totalNumOfVotes: {
+    //     //     $eq: 1
+    //     //   }
+    //     // },
+    //     // sort: {
+    //     //   totalNumOfVotes: -1
+    //     // }
+    //     // select: "upvote downvote"
 
-        // populate: 'comment'
-      })
+    //     // populate: 'comment'
+    //   })
 
-      // console.log('post', post)
-      return post.comment.sort(sortByDesc("totalNumOfVotes"))
-      // return post.comment
-      // console.log('post.comment', post.comment)
-    },
-    createdAt: (parent) => {
-      return parent.createdAt.toLocaleString('en-IN')
-    },
+    //   // console.log('post', post)
+    //   return post.comment.sort(sortByDesc("totalNumOfVotes"))
+    //   // return post.comment
+    //   // console.log('post.comment', post.comment)
+    // },
+    // createdAt: (parent) => {
+    //   return parent.createdAt.toLocaleString('en-IN')
+    // },
 
     // totalNumbersOfVote: parent => {
     //   console.log(parent)

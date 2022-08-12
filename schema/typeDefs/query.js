@@ -23,7 +23,16 @@ module.exports = `#graphql
 
     getSinglePost(
       postId: String!
+      offset: Int
+      limit: Int
     ): Post!
+
+    getSinglePostComment(
+      postId: String!
+      offset: Int
+      limit: Int
+    ): [Comment]!
+
 
     getPosts(
       subredditName: String
