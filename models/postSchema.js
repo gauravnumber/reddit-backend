@@ -14,12 +14,12 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  vote: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    }
-  ],
+  // vote: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'User',
+  //   }
+  // ],
   upvote: [
     {
       type: Schema.Types.ObjectId,
@@ -49,12 +49,16 @@ const postSchema = new Schema({
   }
 })
 
-postSchema.virtual('totalNumOfVotes').get(function (value, virtual, doc) {
+postSchema.virtual('totalNumbersOfVotes').get(function (value, virtual, doc) {
   return this.upvote.length - this.downvote.length
 })
 
 postSchema.set('toObject', {
   getters: true
 })
+
+// postSchema.set('toJSON', {
+//   getters: true
+// })
 
 module.exports = model('Post', postSchema)

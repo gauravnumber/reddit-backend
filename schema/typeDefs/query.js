@@ -4,15 +4,21 @@ module.exports = `#graphql
     getSubredditPost(
       name: String!
       sort: String
+      offset: Int
+      limit: Int
     ): [Post]!
 
     getPostsByUser(
       username: String!
       sort: String
+      offset: Int
+      limit: Int
     ): [Post]!
 
     getRecentPosts(
       sort: String
+      offset: Int
+      limit: Int
     ): [Post]!
 
     getSinglePost(

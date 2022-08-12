@@ -99,7 +99,12 @@ module.exports = {
     },
     createdAt: (parent) => {
       return parent.createdAt.toLocaleString('en-IN')
-    }
+    },
+
+    // totalNumbersOfVote: parent => {
+    //   console.log(parent)
+    //   return 0
+    // }
 
   }
 }
