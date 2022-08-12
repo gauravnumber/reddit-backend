@@ -23,8 +23,6 @@ module.exports = `#graphql
 
     getSinglePost(
       postId: String!
-      offset: Int
-      limit: Int
     ): Post!
 
     getSinglePostComment(
