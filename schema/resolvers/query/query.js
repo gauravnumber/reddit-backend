@@ -3,6 +3,7 @@ const getSubredditPost = require('./getSubredditPost')
 const getPostsByUser = require('./getPostsByUser')
 const getRecentPosts = require('./getRecentPosts')
 const getSinglePost = require('./getSinglePost')
+const getSinglePostComment = require('./getSinglePostComment')
 const getPosts = require('./getPosts')
 const post = require('./post')
 const comment = require('./comment')
@@ -15,6 +16,7 @@ module.exports = {
     ...getRecentPosts.Query,
     ...getSinglePost.Query,
     ...getPosts.Query,
+    ...getSinglePostComment.Query,
   },
   Post: {
     ...post.Post
