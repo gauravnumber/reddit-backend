@@ -15,6 +15,8 @@ module.exports = `#graphql
     totalNumbersOfVotes: Int
     comment: [Comment]
     createdAt: String
+    parentPost: Post!
+    parentComment: Comment
   }
 
   type Post {

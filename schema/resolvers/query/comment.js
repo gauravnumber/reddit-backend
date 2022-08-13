@@ -15,16 +15,9 @@ module.exports = {
       return user
     },
     comment: async (parent) => {
+      console.log('parent', parent)
       const parentComment = await Comment.findById(parent._id).populate({
         path: 'comment',
-        // sort: {
-        //   totalNumbersOfVotes: -1,
-        // }
-        //  match: {
-        //   totalNumbersOfVotes: {
-        //     $gt: 0
-        //   }
-        // }
       })
 
       return parentComment.comment.sort(sortByDesc("totalNumbersOfVotes"))
@@ -41,8 +34,8 @@ module.exports = {
       const comment = await Comment.findById(parent._id).populate('downvote')
       return comment.downvote
     },
-    // createdAt: (parent) => {
-    //   return parent.createdAt.toLocaleString('en-IN')
-    // },
+    createdAt: (parent) => {
+      return parent.createdAt.toLocaleString('en-IN')
+    },
   }
 }
