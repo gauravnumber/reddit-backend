@@ -8,11 +8,11 @@ module.exports = `#graphql
 
   type Comment {
     _id: ID!
-    body: String!
+    body: String
     owner: User!
     upvote: [User]!
     downvote: [User]!
-    totalNumbersOfVotes: Int!
+    totalNumbersOfVotes: Int
     comment: [Comment]
     createdAt: String
   }

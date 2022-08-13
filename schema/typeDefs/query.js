@@ -29,7 +29,8 @@ module.exports = `#graphql
       postId: String!
       offset: Int
       limit: Int
-    ): [Comment]!
+    ): [Comment]
+    # ): Post!
 
 
     getPosts(

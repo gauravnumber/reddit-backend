@@ -1,6 +1,7 @@
 const { sortByDesc } = require('@utils')
-
+// const mongoose = require('mongoose')
 const Post = require('@models/postSchema')
+const Comment = require('@models/commentSchema')
 
 module.exports = {
   Query: {
