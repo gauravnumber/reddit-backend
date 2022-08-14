@@ -1,7 +1,5 @@
 const { AuthenticationError } = require('apollo-server')
-
 const jwt = require('jsonwebtoken')
-
 const { SECRET } = require("@config")
 
 module.exports = (context) => {
@@ -9,12 +7,10 @@ module.exports = (context) => {
 
   if (auth && auth.startsWith('Bearer ')) {
     const token = auth.substring(7)
-
     const decodedToken = jwt.verify(token, SECRET)
 
     return decodedToken
   }
 
   throw new AuthenticationError('First you need to login.')
-
 }

@@ -1,12 +1,12 @@
+const { AuthenticationError } = require('apollo-server')
 const checkAuth = require('@context/check-auth')
-
 const Subreddit = require('@models/subredditSchema')
 const User = require('@models/userSchema')
 const Post = require('@models/postSchema')
 
 module.exports = {
   Mutation: {
-    deletePost: async (_, { username, subredditName, postId }, context) => {
+    deletePost: async (_, { subredditName, postId }, context) => {
       const loginUser = checkAuth(context)
       const post = await Post.findById(postId).populate('owner')
 
@@ -20,11 +20,9 @@ module.exports = {
         })
 
         return await Post.findByIdAndDelete(postId)
-
-        // return "authorized person delete"
       }
 
-      return "unauthorized"
+      throw new AuthenticationError('First you need to login.')
     },
   }
 }

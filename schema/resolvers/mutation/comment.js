@@ -1,3 +1,4 @@
+const { AuthenticationError } = require('apollo-server')
 const checkAuth = require('@context/check-auth')
 
 // const Post = require('@models/postSchema')
@@ -84,7 +85,7 @@ module.exports = {
 
         return comment
       } else {
-        throw new Error("You unauthorized to delete this comment.")
+        throw new AuthenticationError("You unauthorized to delete this comment.")
       }
     },
   }
