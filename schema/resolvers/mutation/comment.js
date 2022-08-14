@@ -13,6 +13,7 @@ module.exports = {
         comment = new Comment({
           body,
           owner: user._id,
+          upvote: [user._id],
           parentPost: postId,
           parentComment: commentId,
           createdAt: new Date().toISOString(),
@@ -21,6 +22,7 @@ module.exports = {
         comment = new Comment({
           body,
           owner: user._id,
+          upvote: [user._id],
           parentPost: postId,
           createdAt: new Date().toISOString(),
         })
