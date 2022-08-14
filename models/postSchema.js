@@ -4,11 +4,13 @@ const postSchema = new Schema({
   title: {
     type: String,
     required: true,
-    minlength: 5
+    trim: true,
+    minlength: 1
   },
   body: {
     type: String,
-    minlength: 5
+    trim: true,
+    minlength: 1
   },
   owner: {
     type: Schema.Types.ObjectId,

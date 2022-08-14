@@ -1,7 +1,7 @@
 module.exports = `#graphql
   post(
     title: String!
-    body: String!
+    body: String
     subredditName: String!
    #  subreddit: String!
   ): Post!

@@ -5,6 +5,7 @@ const commentSchema = new Schema({
   body: {
     type: String,
     required: true,
+    trim: true,
     minlength: 1
   },
   owner: {
