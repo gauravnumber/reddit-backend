@@ -3,8 +3,9 @@ require('module-alias/register')
 const { ApolloServer } = require('apollo-server')
 const { typeDefs, resolvers } = require('./schema')
 const mongoose = require('mongoose')
-
 const { MONGODB_URI, PORT } = require('@config')
+
+// mongoose.set('debug', true)
 
 const server = new ApolloServer({
   cors: true,
