@@ -1,4 +1,4 @@
-const { AuthenticationError, UserInputError } = require('apollo-server')
+const { AuthenticationError, UserInputError } = require('apollo-server-express')
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
