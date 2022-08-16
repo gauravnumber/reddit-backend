@@ -11,24 +11,40 @@ module.exports = {
   Mutation: {
     post: async (_, { title, body, subredditName, image }, context) => {
       const loginUser = checkAuth(context)
-      const { filename, mimetype, createReadStream } = await image
-      const stream = createReadStream()
-      const extname = path.extname(filename)
-      const randomFileName = crypto.randomBytes(20).toString('hex')
-      const pathname = path.join("/home/gaurav/Documents/Practice/reddit/backend", "uploads", `${randomFileName}${extname}`)
-      const writeStream = fs.createWriteStream(pathname)
+      let post
 
-      stream.pipe(writeStream)
+      console.log('image', image)
+      if (image) {
+        const { filename, mimetype, createReadStream } = await image
+        const stream = createReadStream()
+        const extname = path.extname(filename)
+        const randomFileName = crypto.randomBytes(20).toString('hex')
+        const pathname = path.join("/home/gaurav/Documents/Practice/reddit/backend", "uploads", `${randomFileName}${extname}`)
+        const writeStream = fs.createWriteStream(pathname)
+
+        stream.pipe(writeStream)
+
+        post = new Post({
+          title,
+          body,
+          image: {
+            data: fs.readFileSync(pathname),
+            contentType: mimetype
+          },
+          owner: loginUser._id,
+          subreddit: subreddit._id,
+          upvote: [loginUser._id],
+        })
+
+        fs.unlinkSync(pathname)
+      }
+
 
       const subreddit = await Subreddit.findOne({ name: subredditName })
 
-      const post = new Post({
+      post = new Post({
         title,
         body,
-        image: {
-          data: fs.readFileSync(pathname),
-          contentType: mimetype
-        },
         owner: loginUser._id,
         subreddit: subreddit._id,
         upvote: [loginUser._id],
@@ -36,19 +52,7 @@ module.exports = {
 
       const newPost = await post.save()
 
-      await Subreddit.findByIdAndUpdate(subreddit._id, {
-        $push: {
-          post: newPost._id
-        }
-      })
-
-      await User.findByIdAndUpdate(loginUser._id, {
-        $push: {
-          post: newPost._id
-        }
-      })
-
-      fs.unlinkSync(pathname)
+      // fs.unlinkSync(pathname)
       return newPost
     },
 

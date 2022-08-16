@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose')
+const Subreddit = require('@models/subredditSchema')
+const User = require('@models/userSchema')
 
 const postSchema = new Schema({
   title: {
@@ -58,8 +60,22 @@ postSchema.set('toObject', {
   getters: true
 })
 
-// postSchema.set('toJSON', {
-//   getters: true
-// })
+postSchema.post('save', async function (doc) {
+  console.log('doc', doc)
+  await Subreddit.findByIdAndUpdate(doc.subreddit._id, {
+    $push: {
+      post: doc._id
+    }
+  })
+
+  await User.findByIdAndUpdate(doc.owner._id, {
+    $push: {
+      post: doc._id
+    }
+  })
+
+
+
+})
 
 module.exports = model('Post', postSchema)
