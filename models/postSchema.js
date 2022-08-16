@@ -12,6 +12,10 @@ const postSchema = new Schema({
     trim: true,
     minlength: 1
   },
+  image: {
+    data: Buffer,
+    contentType: String
+  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -37,6 +41,7 @@ const postSchema = new Schema({
   createdAt: {
     type: Date,
     required: true,
+    default: new Date().toISOString()
   },
 
   subreddit: {

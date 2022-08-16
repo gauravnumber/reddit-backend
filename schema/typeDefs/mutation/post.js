@@ -3,6 +3,7 @@ module.exports = `#graphql
     title: String!
     body: String
     subredditName: String!
+    image: Upload
    #  subreddit: String!
   ): Post!
 
