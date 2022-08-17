@@ -11,6 +11,12 @@ module.exports = {
 
       if (image) {
         const { filename, mimetype, createReadStream } = await image
+
+        const extname = mimetype.split('/')[1]
+        if (!['jpeg', 'jpg', 'png', 'webp', 'gif'].includes(extname)) {
+          throw new Error("Only jpeg, jpg, png, webp, gif files supported.")
+        }
+
         const stream = createReadStream()
         stream.on('data', async data => {
           const post = new Post({
