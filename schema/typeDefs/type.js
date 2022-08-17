@@ -31,6 +31,7 @@ module.exports = `#graphql
     _id: ID!
     title: String!
     body: String
+    image: Upload
     owner: User!
     upvote: [User]!
     downvote: [User]!
