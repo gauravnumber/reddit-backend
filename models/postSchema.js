@@ -61,7 +61,6 @@ postSchema.set('toObject', {
 })
 
 postSchema.post('save', async function (doc) {
-  console.log('doc', doc)
   await Subreddit.findByIdAndUpdate(doc.subreddit._id, {
     $push: {
       post: doc._id
@@ -73,9 +72,6 @@ postSchema.post('save', async function (doc) {
       post: doc._id
     }
   })
-
-
-
 })
 
 module.exports = model('Post', postSchema)
