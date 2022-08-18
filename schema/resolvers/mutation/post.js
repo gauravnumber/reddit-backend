@@ -10,10 +10,10 @@ module.exports = {
       const subreddit = await Subreddit.findOne({ name: subredditName })
 
       if (image) {
-        const { filename, mimetype, createReadStream } = await image
+        const { mimetype, createReadStream } = await image
 
         const extname = mimetype.split('/')[1]
-        if (!['jpeg', 'jpg', 'png', 'webp', 'gif'].includes(extname)) {
+        if (!['jpeg', 'png', 'webp', 'gif'].includes(extname)) {
           throw new Error("Only jpeg, jpg, png, webp, gif files supported.")
         }
 
@@ -30,8 +30,12 @@ module.exports = {
             subreddit: subreddit._id,
             upvote: [loginUser._id],
           })
+
           return await post.save()
         })
+
+        // console.log(await stream._events.data())
+        // console.log(stream.emit('data'))
       } else {
         const post = new Post({
           title,
