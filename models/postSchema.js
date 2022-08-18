@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose')
+const Subreddit = require('@models/subredditSchema')
+const User = require('@models/userSchema')
 
 const postSchema = new Schema({
   title: {
@@ -11,6 +13,10 @@ const postSchema = new Schema({
     type: String,
     trim: true,
     minlength: 1
+  },
+  image: {
+    data: Buffer,
+    contentType: String
   },
   owner: {
     type: Schema.Types.ObjectId,
@@ -37,6 +43,7 @@ const postSchema = new Schema({
   createdAt: {
     type: Date,
     required: true,
+    default: new Date().toISOString()
   },
 
   subreddit: {
@@ -53,8 +60,18 @@ postSchema.set('toObject', {
   getters: true
 })
 
-// postSchema.set('toJSON', {
-//   getters: true
-// })
+postSchema.post('save', async function (doc) {
+  await Subreddit.findByIdAndUpdate(doc.subreddit._id, {
+    $push: {
+      post: doc._id
+    }
+  })
+
+  await User.findByIdAndUpdate(doc.owner._id, {
+    $push: {
+      post: doc._id
+    }
+  })
+})
 
 module.exports = model('Post', postSchema)

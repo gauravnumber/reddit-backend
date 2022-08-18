@@ -8,6 +8,10 @@ const commentSchema = new Schema({
     trim: true,
     minlength: 1
   },
+  image: {
+    data: Buffer,
+    contentType: String
+  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -34,7 +38,8 @@ const commentSchema = new Schema({
   }],
   createdAt: {
     type: Date,
-    required: true
+    required: true,
+    default: new Date().toISOString()
   }
 })
 
