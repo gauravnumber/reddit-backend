@@ -34,8 +34,8 @@ module.exports = {
       const comment = await Comment.findById(parent._id).populate('downvote')
       return comment.downvote
     },
-    createdAt: (parent) => {
-      return parent.createdAt.toLocaleString('en-IN')
-    },
+    // createdAt: (parent) => {
+    //   return parent.createdAt.toLocaleString('en-IN')
+    // },
   }
 }

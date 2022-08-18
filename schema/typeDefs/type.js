@@ -17,6 +17,7 @@ module.exports = `#graphql
   type Comment {
     _id: ID!
     body: String!
+    image: Upload
     owner: User!
     upvote: [User]!
     downvote: [User]!
