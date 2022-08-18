@@ -4,7 +4,6 @@ module.exports = `#graphql
     body: String
     subredditName: String!
     image: Upload
-   #  subreddit: String!
   ): Post
 
   upvote(
