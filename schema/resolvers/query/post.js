@@ -7,6 +7,11 @@ const Subreddit = require('@models/subredditSchema')
 
 module.exports = {
   Post: {
+    // image: parent => {
+    //   // return parent.image === undefined ? "yes" : parent?.image?.data
+    //   return { data: parent?.image?.data, contentType: parent.image.contentType }
+    //   // console.log('parent', parent)
+    // },
     owner: async (parent) => {
       const loginUser = await User.findById(parent.owner)
 
