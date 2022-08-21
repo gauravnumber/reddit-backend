@@ -41,7 +41,7 @@ module.exports = {
           upvote: [loginUser._id],
         })
 
-        console.log('post', post)
+        // console.log('post', post)
         return await post.save()
 
 
