@@ -15,7 +15,7 @@ const postSchema = new Schema({
     minlength: 1
   },
   image: {
-    data: Buffer,
+    data: String,
     contentType: String
   },
   owner: {
