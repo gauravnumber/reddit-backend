@@ -1,4 +1,5 @@
 require('module-alias/register')
+const path = require("path")
 
 const express = require('express')
 const { ApolloServer } = require('apollo-server-express')
@@ -40,6 +41,11 @@ async function startServer() {
   app.use(graphqlUploadExpress());
 
   server.applyMiddleware({ app });
+
+  app.get('/uploads/:image', (req, res) => {
+    const pathname = path.join(__dirname, 'uploads', req.params.image)
+    res.sendFile(pathname)
+  })
 
   await new Promise(r => app.listen({ port: 4000 }, err => {
     mongoose.connect(MONGODB_URI, {

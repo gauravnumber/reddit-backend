@@ -15,7 +15,8 @@ const postSchema = new Schema({
     minlength: 1
   },
   image: {
-    data: Buffer,
+    // data: Buffer,
+    data: String,
     contentType: String
   },
   owner: {
@@ -43,7 +44,8 @@ const postSchema = new Schema({
   createdAt: {
     type: Date,
     required: true,
-    default: new Date().toISOString()
+    // default: new Date().toISOString()
+    default: Date.now
   },
 
   subreddit: {
