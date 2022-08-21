@@ -1,6 +1,3 @@
-const crypto = require("crypto")
-const path = require("path")
-const fs = require("fs")
 const checkAuth = require('@context/check-auth')
 
 const Post = require('@models/postSchema')
@@ -21,45 +18,21 @@ module.exports = {
         }
 
         const stream = createReadStream()
-        // const extname = path.extname(filename)
-        const randomFileName = crypto.randomBytes(20).toString('hex')
-        const imageName = `${randomFileName}.${extname}`
-        const pathname = path.join("/home/gaurav/Documents/Practice/reddit/backend", "uploads", imageName)
-        const writeStream = fs.createWriteStream(pathname)
+        stream.on('data', async data => {
+          const post = new Post({
+            title,
+            body,
+            image: {
+              data,
+              contentType: mimetype
+            },
+            owner: loginUser._id,
+            subreddit: subreddit._id,
+            upvote: [loginUser._id],
+          })
 
-        stream.pipe(writeStream)
-
-        const post = new Post({
-          title,
-          body,
-          image: {
-            data: imageName,
-            contentType: mimetype
-          },
-          owner: loginUser._id,
-          subreddit: subreddit._id,
-          upvote: [loginUser._id],
+          return await post.save()
         })
-
-        console.log('post', post)
-        return await post.save()
-
-
-        //stream.on('data', (data) => {
-        //   const post = new Post({
-        //     title,
-        //     body,
-        //     image: {
-        //       data,
-        //       contentType: mimetype
-        //     },
-        //     owner: loginUser._id,
-        //     subreddit: subreddit._id,
-        //     upvote: [loginUser._id],
-        //   })
-
-        //   return await post.save()
-        // })
 
         // console.log(await stream._events.data())
         // console.log(stream.emit('data'))

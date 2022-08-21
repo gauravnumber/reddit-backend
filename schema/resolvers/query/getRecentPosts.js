@@ -2,7 +2,7 @@ const Post = require('@models/postSchema')
 
 module.exports = {
   Query: {
-    getRecentPosts: async (_, { sort = 'new', offset = 0, limit = 10 }) => {
+    getRecentPosts: async (_, { sort, offset = 0, limit = 10 }) => {
       const today = new Date()
       let calculatedDate = new Date()
 
