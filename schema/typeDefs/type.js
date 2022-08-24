@@ -28,11 +28,16 @@ module.exports = `#graphql
     parentComment: Comment
   }
 
+  type Image {
+    data: String
+    contentType: String
+  }
+
   type Post {
     _id: ID!
     title: String!
     body: String
-    image: Upload
+    image: Image
     owner: User!
     upvote: [User]!
     downvote: [User]!

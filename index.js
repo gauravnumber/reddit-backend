@@ -1,7 +1,11 @@
 require('module-alias/register')
+const path = require("path")
 
 const express = require('express')
-const { ApolloServer } = require('apollo-server-express')
+const {
+  ApolloServer,
+  // graphqlUploadExpress
+} = require('apollo-server-express')
 const {
   ApolloServerPluginLandingPageLocalDefault,
 } = require('apollo-server-core');
@@ -23,6 +27,7 @@ async function startServer() {
     cors: true,
     typeDefs,
     resolvers,
+    // uploads: false,
     context: ({ req }) => ({ req }),
     // Using graphql-upload without CSRF prevention is very insecure.
     csrfPrevention: true,
@@ -37,9 +42,16 @@ async function startServer() {
   const app = express();
 
   // This middleware should be added before calling `applyMiddleware`.
-  app.use(graphqlUploadExpress());
+  app.use(graphqlUploadExpress({ maxFileSize: 10000, maxFiles: 10 }));
 
   server.applyMiddleware({ app });
+
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
+  // app.get('/uploads/:image', (req, res) => {
+  //   const pathname = path.join(__dirname, 'uploads', req.params.image)
+  //   res.sendFile(pathname)
+  // })
 
   await new Promise(r => app.listen({ port: 4000 }, err => {
     mongoose.connect(MONGODB_URI, {
