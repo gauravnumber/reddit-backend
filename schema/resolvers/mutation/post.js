@@ -24,8 +24,12 @@ module.exports = {
         // const extname = path.extname(filename)
         const randomFileName = crypto.randomBytes(20).toString('hex')
         const imageName = `${randomFileName}.${extname}`
-        const pathname = path.join("/home/gaurav/Documents/Practice/reddit/backend", "uploads", imageName)
+        // const pathname = path.join("/home/gaurav/Documents/Practice/reddit/backend", "uploads", imageName)
+        const pathname = path.join(__dirname, '../../../uploads', imageName)
         const writeStream = fs.createWriteStream(pathname)
+
+        // console.log('path.join("/home/gaurav/Documents/Practice/reddit/backend", "uploads", imageName)', path.join("/home/gaurav/Documents/Practice/reddit/backend", "uploads", imageName))
+        // console.log('path.join(__dirname, ../../../uploads)', path.join(__dirname, '../../../uploads'))
 
         stream.pipe(writeStream)
 
@@ -39,6 +43,7 @@ module.exports = {
           owner: loginUser._id,
           subreddit: subreddit._id,
           upvote: [loginUser._id],
+          // createdAt: Date.now()
         })
 
         // console.log('post', post)

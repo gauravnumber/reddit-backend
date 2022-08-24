@@ -43,7 +43,7 @@ const postSchema = new Schema({
   createdAt: {
     type: Date,
     required: true,
-    default: new Date().toISOString()
+    default: Date.now
   },
 
   subreddit: {
