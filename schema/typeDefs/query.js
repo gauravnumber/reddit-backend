@@ -19,7 +19,7 @@ module.exports = `#graphql
       sort: String
       offset: Int
       limit: Int
-    ): [Post]!
+    ): [Post]
 
     getSinglePost(
       postId: String!

@@ -29,8 +29,8 @@ module.exports = `#graphql
   }
 
   type Image {
-    data: String!
-    contentType: String!
+    data: String
+    contentType: String
   }
 
   type Post {
