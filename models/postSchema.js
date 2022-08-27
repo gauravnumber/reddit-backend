@@ -12,7 +12,7 @@ const postSchema = new Schema({
   body: {
     type: String,
     trim: true,
-    minlength: 1
+    // minlength: 1
   },
   image: {
     data: String,
