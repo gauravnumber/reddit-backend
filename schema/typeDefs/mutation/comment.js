@@ -8,10 +8,11 @@ module.exports = `#graphql
   ): Comment!
 
   setComment(
-    postId: String
+    postId: String!
     commentId: String
-    body: String!
-  ): Comment!
+    body: String
+    image: Upload
+  ): Comment
 
   deleteComment(
     commentId: String!

@@ -1,4 +1,12 @@
 module.exports = `#graphql
+  scalar Upload
+
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
   type User {
     _id: ID!
     username: String!
@@ -9,18 +17,27 @@ module.exports = `#graphql
   type Comment {
     _id: ID!
     body: String!
+    image: Upload
     owner: User!
     upvote: [User]!
     downvote: [User]!
-    totalNumbersOfVotes: Int!
+    totalNumbersOfVotes: Int
     comment: [Comment]
     createdAt: String
+    parentPost: Post!
+    parentComment: Comment
+  }
+
+  type Image {
+    data: String
+    contentType: String
   }
 
   type Post {
     _id: ID!
     title: String!
     body: String
+    image: Image
     owner: User!
     upvote: [User]!
     downvote: [User]!

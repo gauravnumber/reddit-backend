@@ -6,6 +6,7 @@ const comment = require('./comment')
 const subreddit = require('./subreddit')
 const deletePost = require('./deletePost')
 const editPost = require('./editPost')
+const upload = require('./upload')
 
 module.exports = {
   Mutation: {
@@ -17,5 +18,6 @@ module.exports = {
     ...subreddit.Mutation,
     ...deletePost.Mutation,
     ...editPost.Mutation,
+    ...upload.Mutation,
   }
 }

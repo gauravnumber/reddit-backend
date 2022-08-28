@@ -1,10 +1,10 @@
 module.exports = `#graphql
   post(
     title: String!
-    body: String!
+    body: String
     subredditName: String!
-   #  subreddit: String!
-  ): Post!
+    image: Upload
+  ): Post
 
   upvote(
     postId: String!
@@ -15,7 +15,7 @@ module.exports = `#graphql
   ): Post!
 
   deletePost(
-    username: String!
+    # username: String!
     subredditName: String!
     postId: String!
   ): Post

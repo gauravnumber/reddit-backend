@@ -7,8 +7,17 @@ const Subreddit = require('@models/subredditSchema')
 
 module.exports = {
   Post: {
+    // image: parent => {
+    //   // return parent.image === undefined ? "yes" : parent?.image?.data
+    //   return { data: parent?.image?.data, contentType: parent.image.contentType }
+    //   // console.log('parent', parent)
+    // },
     owner: async (parent) => {
       const loginUser = await User.findById(parent.owner)
+
+      // console.log('loginUser', loginUser)
+      // console.log('parent.owner', parent.owner)
+      // console.log('parent', parent)
 
       if (!loginUser) return { username: "deleted" };
 
@@ -44,23 +53,6 @@ module.exports = {
 
       return downvoteUser
     },
-    // vote: async (parent) => {
-    //   const voteUser = []
-
-    //   for (let index = 0; index < parent.vote.length; index++) {
-    //     const user = await User.findById(parent.vote[index])
-
-    //     if (!user) {
-    //       voteUser.push({ username: "deleted" })
-    //       continue
-    //     }
-
-    //     voteUser.push(user)
-    //   }
-
-    //   return voteUser
-    // },
-
     // totalNumOfVotes: (parent) => {
     //   return parent.upvote.length - parent.downvote.length
     // },
@@ -76,36 +68,15 @@ module.exports = {
 
     },
 
-    // comment: async (parent) => {
-    //   const post = await Post.findById(parent._id).populate({
-    //     path: 'comment',
-    //     perDocumentLimit: 2
-    //     // match: {
-    //     //   totalNumOfVotes: {
-    //     //     $eq: 1
-    //     //   }
-    //     // },
-    //     // sort: {
-    //     //   totalNumOfVotes: -1
-    //     // }
-    //     // select: "upvote downvote"
+    comment: async (parent) => {
+      const post = await Post.findById(parent._id).populate({
+        path: 'comment',
+      })
 
-    //     // populate: 'comment'
-    //   })
-
-    //   // console.log('post', post)
-    //   return post.comment.sort(sortByDesc("totalNumOfVotes"))
-    //   // return post.comment
-    //   // console.log('post.comment', post.comment)
-    // },
+      return post.comment.sort(sortByDesc("totalNumbersOfVotes"))
+    },
     // createdAt: (parent) => {
     //   return parent.createdAt.toLocaleString('en-IN')
     // },
-
-    // totalNumbersOfVote: parent => {
-    //   console.log(parent)
-    //   return 0
-    // }
-
   }
 }

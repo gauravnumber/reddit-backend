@@ -1,42 +1,80 @@
+const { AuthenticationError } = require('apollo-server-express')
 const checkAuth = require('@context/check-auth')
-
-const Post = require('@models/postSchema')
 const Comment = require('@models/commentSchema')
 
 module.exports = {
   Mutation: {
-    setComment: async (_, { postId, commentId, body }, context) => {
+    setComment: async (_, { postId, commentId, body, image }, context) => {
       const user = checkAuth(context)
+      let comment
 
-      if (!postId && !commentId) throw new Error("Provide one id, postId or commentId")
+      console.log('image', image)
 
-      const comment = new Comment({
-        body,
-        owner: user._id,
-        createdAt: new Date().toISOString(),
-      })
+      //? comment on comment
+      if (commentId) {
+        if (image) {
+          const { mimetype, createReadStream } = await image
 
-      // console.log('comment', comment)
+          const stream = createReadStream()
+          stream.on('data', async data => {
+            comment = new Comment({
+              body,
+              image: {
+                data,
+                contentType: mimetype
+              },
+              owner: user._id,
+              upvote: [user._id],
+              parentPost: postId,
+              parentComment: commentId,
+            })
 
-      comment.save(async (err, doc) => {
-        if (err) return new Error(err)
-
-        if (commentId) {
-          await Comment.findByIdAndUpdate(commentId, {
-            $push: {
-              comment: doc._id
-            }
+            return await comment.save()
           })
-        } else if (postId) {
-          await Post.findByIdAndUpdate(postId, {
-            $push: {
-              comment: doc._id
-            }
+          return
+        } else {
+          //? without image
+          comment = new Comment({
+            body,
+            owner: user._id,
+            upvote: [user._id],
+            parentPost: postId,
+            parentComment: commentId,
+          })
+
+        }
+      } else {
+        //? comment on post
+        if (image) {
+          const { mimetype, createReadStream } = await image
+          const stream = createReadStream()
+          stream.on('data', async data => {
+            comment = new Comment({
+              body,
+              image: {
+                data,
+                contentType: mimetype
+              },
+              owner: user._id,
+              upvote: [user._id],
+              parentPost: postId,
+            })
+
+            return await comment.save()
+          })
+          return
+        } else {
+          //? comment on post without image
+          comment = new Comment({
+            body,
+            owner: user._id,
+            upvote: [user._id],
+            parentPost: postId,
           })
         }
-      })
+      }
 
-      return comment
+      return await comment.save()
     },
 
     deleteComment: async (_, { commentId }, context) => {
@@ -58,7 +96,7 @@ module.exports = {
 
         return comment
       } else {
-        throw new Error("You unauthorized to delete this comment.")
+        throw new AuthenticationError("You unauthorized to delete this comment.")
       }
     },
   }

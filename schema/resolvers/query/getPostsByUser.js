@@ -31,7 +31,10 @@ module.exports = {
           user = await User.findOne({ username })
             .populate({
               path: 'post',
-              options: { sort: { createdAt: -1 } }
+              options: { sort: { createdAt: -1 } },
+              // populate: {
+              //   path: 'comment',
+              // }
             })
 
           return user.post.slice(offset, offset + limit)
