@@ -53,7 +53,7 @@ async function startServer() {
   //   res.sendFile(pathname)
   // })
 
-  await new Promise(r => app.listen({ port: 4000 }, err => {
+  await new Promise(r => app.listen({ port: PORT }, err => {
     mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -61,7 +61,7 @@ async function startServer() {
       .then(() => console.log('MongoDB connected.'))
       .catch(err => console.error(`MongoDB not connected: ${err.message}`))
 
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
 
     return r
   }));
